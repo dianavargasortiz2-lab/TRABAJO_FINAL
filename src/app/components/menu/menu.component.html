@@ -1,0 +1,65 @@
+<section class="pagina-header">
+  <h1>Nuestro menú</h1>
+  <p>Todo recién salido del asador</p>
+</section>
+<section class="menu">
+  @if (catalogNotice()) {
+    <p class="form-feedback error" role="status">{{ catalogNotice() }}</p>
+  }
+  <div class="toolbar">
+    <input
+      type="search"
+      aria-label="Buscar productos"
+      placeholder="Buscar productos..."
+      [value]="search()"
+      (input)="search.set($any($event.target).value)"
+    >
+    <div class="filter-buttons" aria-label="Filtrar por categoría">
+      @for (item of categories; track item) {
+        <button type="button" [class.selected]="category() === item" (click)="category.set(item)">{{ item }}</button>
+      }
+    </div>
+  </div>
+  @if (notice) {
+    <p class="form-feedback success" role="status">{{ notice }}</p>
+  }
+  <div class="menu-grid">
+    @for (product of visibleProducts(); track product.id) {
+      <article class="tarjeta">
+        <img [src]="product.image" [alt]="product.name" loading="lazy">
+        <div class="tarjeta-body">
+          <span class="badge-tipo">{{ product.category }}</span>
+          <h3>{{ product.name }}</h3>
+          @if (product.rating) { <span class="promedio-estrellas" [attr.aria-label]="product.rating + ' de 5 estrellas'">★ {{ product.rating }} / 5</span> }
+          <p>{{ product.description }}</p>
+          <span class="precio">{{ product.startsAt ? 'Desde ' : '' }}{{ product.price | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span>
+          <div class="menu-actions">
+            <button type="button" class="add-cart" (click)="add(product)">🛒 Agregar al carrito</button>
+            <a class="order-whatsapp" [href]="whatsappLink(product)" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span> Pedir por WhatsApp</a>
+          </div>
+        </div>
+      </article>
+    } @empty {
+      <p class="sin-reseñas">No encontramos productos en esta categoría.</p>
+    }
+  </div>
+  <aside class="cart-panel">
+    <div class="toolbar">
+      <div>
+        <h2>Tu carrito</h2>
+        <p>{{ cart.count }} producto(s) · {{ cart.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</p>
+      </div>
+      <a routerLink="/checkout" class="btn-primary">Continuar pedido</a>
+    </div>
+    @if (cart.items.length) {
+      @for (item of cart.items; track item.product.id) {
+        <div class="cart-line">
+          <span>{{ item.product.name }} × {{ item.quantity }}</span>
+          <span>{{ item.product.price * item.quantity | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span>
+        </div>
+      }
+    } @else {
+      <p>Agrega productos del menú para comenzar tu pedido.</p>
+    }
+  </aside>
+</section>

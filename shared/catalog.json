@@ -1,0 +1,112 @@
+{
+  "categories": [
+    "Combos",
+    "Pollos",
+    "Acompañamientos",
+    "Bebidas",
+    "Postres"
+  ],
+  "products": [
+    {
+      "id": "pollo-entero",
+      "name": "Pollo asado entero",
+      "description": "Marinado en especias secretas, asado al carbón lentamente.",
+      "price": 30000,
+      "category": "Pollos",
+      "image": "/img/menu/pollo-entero.svg"
+    },
+    {
+      "id": "medio-pollo",
+      "name": "Medio pollo",
+      "description": "Perfecto para compartir en pareja o como almuerzo completo.",
+      "price": 16000,
+      "category": "Pollos",
+      "image": "/img/menu/medio-pollo.svg"
+    },
+    {
+      "id": "cuarto-pollo",
+      "name": "Cuarto de pollo",
+      "description": "Perfecto para ti — quedas llenito por bajo precio.",
+      "price": 9000,
+      "category": "Pollos",
+      "image": "/img/menu/cuarto-pollo.svg",
+      "startsAt": true
+    },
+    {
+      "id": "papas-saladas",
+      "name": "Papas saladas",
+      "description": "Crocantes por fuera, suaves por dentro.",
+      "price": 2000,
+      "category": "Acompañamientos",
+      "image": "/img/menu/papas.svg"
+    },
+    {
+      "id": "yuca",
+      "name": "Yuca",
+      "description": "Yuca tierna y bien cocida, el acompañamiento típico huilense que no puede faltar.",
+      "price": 2000,
+      "category": "Acompañamientos",
+      "image": "/img/menu/yuca.svg"
+    },
+    {
+      "id": "platano-entero",
+      "name": "Plátano entero",
+      "description": "El mejor plátano de la región para tu complacencia.",
+      "price": 6000,
+      "category": "Acompañamientos",
+      "image": "/img/menu/platano.svg"
+    },
+    {
+      "id": "arroz",
+      "name": "Arroz",
+      "description": "Arroz blanco al vapor, el acompañamiento clásico.",
+      "price": 2000,
+      "category": "Acompañamientos",
+      "image": "/img/menu/arroz.svg"
+    },
+    {
+      "id": "gaseosas",
+      "name": "Gaseosas",
+      "description": "Coca-Cola, Sprite, Manzana. Bien fría.",
+      "price": 3000,
+      "category": "Bebidas",
+      "image": "/img/menu/gaseosas.svg"
+    }
+  ],
+  "vacancies": [
+    {
+      "id": "auxiliar-cocina",
+      "cargo": "Auxiliar de cocina",
+      "jornada": "Tiempo completo",
+      "ubicacion": "Neiva, Huila",
+      "requisitos": ["Actitud positiva", "Disposición para aprender"],
+      "descripcion": "Buscamos persona con actitud positiva y dispuesta a aprender. No se requiere experiencia previa — nosotros te enseñamos.",
+      "activa": true
+    },
+    {
+      "id": "cajero-atencion",
+      "cargo": "Cajero / Atención al cliente",
+      "jornada": "Tiempo completo",
+      "ubicacion": "Neiva, Huila",
+      "requisitos": [
+        "Amabilidad y responsabilidad",
+        "Experiencia en caja deseable, no obligatoria"
+      ],
+      "descripcion": "Persona amable, responsable y con buenas habilidades de comunicación. Experiencia en caja deseable pero no obligatoria.",
+      "activa": true
+    },
+    {
+      "id": "repartidor",
+      "cargo": "Repartidor",
+      "jornada": "Medio tiempo",
+      "ubicacion": "Neiva, Huila",
+      "requisitos": [
+        "Moto propia",
+        "Licencia de conducción vigente",
+        "Conocimiento de las calles de Neiva"
+      ],
+      "descripcion": "Con moto propia y licencia de conducción vigente. Conocimiento de las calles de Neiva. Buena actitud y puntualidad.",
+      "activa": true
+    }
+  ]
+}

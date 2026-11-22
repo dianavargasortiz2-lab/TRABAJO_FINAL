@@ -1,0 +1,205 @@
+<section class="pagina-header">
+  <h1>Únete & Opiniones</h1>
+  <p>Haz parte del equipo o cuéntanos tu experiencia</p>
+</section>
+<section class="unete-wrapper">
+  <h2 class="seccion-titulo">Vacantes disponibles</h2>
+  <p class="seccion-subtitulo">Selecciona la vacante que te interesa y completa el formulario.</p>
+  @if (vacancyNotice) {
+    <p class="form-feedback error" role="status">{{ vacancyNotice }}</p>
+  }
+  <div class="vacantes-grid">
+    @for (vacancy of vacancies; track vacancy._id) {
+      <article class="vacante-nueva">
+        <div class="vacante-icono">💼</div>
+        <h3>{{ vacancy.cargo }}</h3>
+        <p>{{ vacancy.descripcion }}</p>
+        <div class="vacante-meta"><span class="badge-tipo">{{ vacancy.jornada }}</span></div>
+        <p><strong>Ubicación:</strong> {{ vacancy.ubicacion }}</p>
+        <ul class="vacante-requisitos">
+          @for (requirement of vacancy.requisitos; track requirement) {
+            <li>{{ requirement }}</li>
+          }
+        </ul>
+        <button type="button" class="btn-aplicar" (click)="selectVacancy(vacancy)">Aplicar a esta vacante →</button>
+      </article>
+    } @empty {
+      <p>En este momento no hay vacantes publicadas.</p>
+    }
+  </div>
+  <section class="content-card" id="formulario-postulacion">
+    <h2 class="seccion-titulo">Formulario de postulación</h2>
+    <p class="seccion-subtitulo">Adjunta tu hoja de vida en PDF para enviar la postulación.</p>
+    <form class="formulario-hv" [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
+      <div class="campo-grupo">
+        <label for="app-nombre">Nombre completo *</label>
+        <input id="app-nombre" formControlName="nombre" autocomplete="name" required>
+        @if (applicationForm.controls.nombre.touched && applicationForm.controls.nombre.invalid) {
+          <small class="field-error">Ingresa tu nombre completo.</small>
+        }
+      </div>
+      <div class="fila-dos">
+        <div class="campo-grupo">
+          <label for="app-email">Correo electrónico *</label>
+          <input id="app-email" type="email" formControlName="email" autocomplete="email" required>
+          @if (applicationForm.controls.email.touched && applicationForm.controls.email.invalid) {
+            <small class="field-error">Ingresa un correo válido.</small>
+          }
+        </div>
+        <div class="campo-grupo">
+          <label for="app-telefono">Teléfono *</label>
+          <input id="app-telefono" type="tel" formControlName="telefono" autocomplete="tel" required>
+          @if (applicationForm.controls.telefono.touched && applicationForm.controls.telefono.invalid) {
+            <small class="field-error">Ingresa un teléfono válido.</small>
+          }
+        </div>
+      </div>
+      <div class="campo-grupo">
+        <label for="app-vacante">Cargo seleccionado *</label>
+        <select id="app-vacante" formControlName="vacante" required>
+          <option value="">Selecciona una vacante</option>
+          @for (vacancy of vacancies; track vacancy._id) {
+            <option [value]="vacancy._id">{{ vacancy.cargo }}</option>
+          }
+        </select>
+      </div>
+      <div class="fila-dos">
+        <div class="campo-grupo">
+          <label for="app-disponibilidad">Disponibilidad</label>
+          <select id="app-disponibilidad" formControlName="disponibilidad">
+            <option value="">Selecciona</option>
+            <option value="inmediata">Inmediata</option>
+            <option value="1-semana">En una semana</option>
+            <option value="2-semanas">En dos semanas</option>
+            <option value="1-mes">En un mes</option>
+            <option value="manana">Mañanas</option>
+            <option value="tarde">Tardes</option>
+            <option value="ambos">Ambos horarios</option>
+            <option value="fines">Fines de semana</option>
+          </select>
+        </div>
+        <div class="campo-grupo">
+          <label for="app-experiencia">Experiencia previa (opcional)</label>
+          <textarea id="app-experiencia" formControlName="experiencia" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="fila-dos">
+        <div class="campo-grupo">
+          <label for="app-edad">Edad (opcional)</label>
+          <input id="app-edad" type="number" formControlName="edad" min="16" max="65">
+        </div>
+        <div class="campo-grupo">
+          <label for="app-exp-caja">Experiencia en caja o servicio al cliente</label>
+          <select id="app-exp-caja" formControlName="experienciaCaja">
+            <option value="">Selecciona</option>
+            <option value="si-mucha">Sí, bastante experiencia</option>
+            <option value="si-poca">Sí, algo de experiencia</option>
+            <option value="no">No, pero me interesa aprender</option>
+          </select>
+        </div>
+      </div>
+      @if (isCourier) {
+        <div class="campo-grupo">
+          <label for="app-exp-domicilios">Experiencia en domicilios</label>
+          <select id="app-exp-domicilios" formControlName="experienciaDomicilios">
+            <option value="">Selecciona</option>
+            <option value="si">Sí, tengo experiencia en domicilios</option>
+            <option value="no">No, pero tengo disponibilidad</option>
+          </select>
+        </div>
+      }
+      @if (isCourier) {
+        <div class="campo-grupo">
+          <label for="app-moto">¿Qué moto tienes?</label>
+          <input id="app-moto" formControlName="moto">
+          <div class="requisitos-lista">
+            <label class="requisito-item"><input type="checkbox" formControlName="reqMoto" [required]="isCourier"> Tengo moto propia en buen estado</label>
+            <label class="requisito-item"><input type="checkbox" formControlName="reqLicencia" [required]="isCourier"> Tengo licencia de conducción vigente</label>
+            <label class="requisito-item"><input type="checkbox" formControlName="reqCalles" [required]="isCourier"> Conozco bien las calles de Neiva</label>
+          </div>
+        </div>
+      }
+      <div class="campo-grupo">
+        <label for="app-motivacion">¿Por qué quieres trabajar con nosotros?</label>
+        <textarea id="app-motivacion" formControlName="motivacion" rows="3"></textarea>
+      </div>
+      <div class="campo-grupo">
+        <label for="app-cv">Hoja de vida PDF * (máximo 5 MB)</label>
+        <input id="app-cv" class="hidden-file-input" type="file" accept="application/pdf,.pdf" (change)="onFileSelected($event)" required>
+        @if (selectedFile) { <small>{{ selectedFile.name }}</small> }
+      </div>
+      @if (applicationMessage) { <p class="form-feedback success" role="status">{{ applicationMessage }}</p> }
+      @if (applicationError) { <p class="form-feedback error" role="alert">{{ applicationError }}</p> }
+      <button type="submit" class="btn-enviar" [disabled]="submittingApplication">
+        {{ submittingApplication ? 'Enviando…' : 'Enviar mi postulación' }}
+      </button>
+    </form>
+  </section>
+</section>
+
+<section class="opiniones-seccion">
+  <div class="opiniones-inner">
+    <h2 class="opiniones-titulo-seccion">Opiniones</h2>
+    <p class="opiniones-subtitulo">Lo que dicen quienes ya probaron el mejor pollo de Neiva.</p>
+    <div class="opiniones-layout">
+      <div class="opinion-form-card">
+        <h3>¿Ya probaste nuestro pollo?</h3>
+        <p class="form-desc">Cuéntanos tu experiencia. Tu opinión ayuda a otros clientes a elegirnos.</p>
+        <form class="opinion-form" [formGroup]="opinionForm" (ngSubmit)="submitOpinion()">
+          <div class="campo-opinion">
+            <label for="op-nombre">Tu nombre *</label>
+            <input id="op-nombre" formControlName="nombre" maxlength="50" required>
+          </div>
+          <div class="campo-opinion">
+            <label for="op-plato">¿Qué pediste? (opcional)</label>
+            <input id="op-plato" formControlName="plato" maxlength="80">
+          </div>
+          <div class="estrellas-grupo">
+            <label>Calificación *</label>
+            <div class="estrellas">
+              @for (rating of [5, 4, 3, 2, 1]; track rating) {
+                <input type="radio" name="rating" [id]="'star' + rating" [checked]="opinionForm.controls.rating.value === rating" (change)="opinionForm.controls.rating.setValue(rating)">
+                <label [for]="'star' + rating" [attr.aria-label]="rating + ' estrellas'">★</label>
+              }
+            </div>
+          </div>
+          <div class="campo-opinion">
+            <label for="op-comentario">Tu comentario *</label>
+            <textarea id="op-comentario" rows="4" formControlName="comentario" maxlength="500" required></textarea>
+          </div>
+          <div class="aviso-moderacion">⏳ Tu opinión aparecerá en la web luego de una breve revisión.</div>
+          @if (opinionMessage) { <p class="form-feedback success" role="status">{{ opinionMessage }}</p> }
+          @if (opinionError) { <p class="form-feedback error" role="alert">{{ opinionError }}</p> }
+          <button type="submit" class="btn-opinion" [disabled]="submittingOpinion">
+            {{ submittingOpinion ? 'Enviando…' : 'Publicar mi opinión ⭐' }}
+          </button>
+        </form>
+      </div>
+      <div class="columna-reseñas">
+        <h2 class="reseñas-titulo">Lo que dice nuestra gente</h2>
+        @if (opinionError && !opinions.length) {
+          <p class="form-feedback error">{{ opinionError }}</p>
+        } @else if (opinions.length) {
+          <p class="reseñas-meta"><span class="promedio-estrellas">★ {{ averageRating }}</span> de 5 — {{ opinions.length }} {{ opinions.length === 1 ? 'opinión' : 'opiniones' }}</p>
+          <div class="reseñas-grid">
+            @for (opinion of opinions; track opinion._id) {
+              <article class="reseña-card">
+                <div class="reseña-header">
+                  <div class="reseña-avatar">{{ opinion.nombre.slice(0, 1).toUpperCase() }}</div>
+                  <div class="reseña-info">
+                    <h4>{{ opinion.nombre }}</h4>
+                    <span class="reseña-fecha">{{ opinion.createdAt | date:'longDate':'':'es-CO' }}{{ opinion.plato ? ' · ' + opinion.plato : '' }}</span>
+                  </div>
+                </div>
+                <div class="reseña-estrellas">{{ '★'.repeat(opinion.rating) }}{{ '☆'.repeat(5 - opinion.rating) }}</div>
+                <p class="reseña-texto">{{ opinion.comentario }}</p>
+              </article>
+            }
+          </div>
+        } @else {
+          <div class="sin-reseñas"><span>💬</span>¡Sé el primero en opinar!</div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

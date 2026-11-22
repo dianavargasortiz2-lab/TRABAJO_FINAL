@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <a routerLink="/" class="logo" (click)="closeMenu()">🔥 Asadero Con Afán</a>
+  <button
+    class="hamburguesa"
+    [class.abierto]="menuAbierto"
+    [attr.aria-expanded]="menuAbierto"
+    aria-label="Abrir menú"
+    (click)="toggleMenu()"
+  >
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" [class.abierto]="menuAbierto">
+    <li><a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Inicio</a></li>
+    <li><a routerLink="/menu" routerLinkActive="activo" (click)="closeMenu()">Menú</a></li>
+    <li><a routerLink="/equipo" routerLinkActive="activo" (click)="closeMenu()">Nuestro equipo</a></li>
+    <li><a routerLink="/unete" routerLinkActive="activo" (click)="closeMenu()">Únete & Opiniones</a></li>
+    <li><a routerLink="/checkout" routerLinkActive="activo" (click)="closeMenu()">Carrito</a></li>
+  </ul>
+</nav>
+<div class="nav-overlay" [class.visible]="menuAbierto" (click)="closeMenu()"></div>
+<router-outlet />
+<a
+  href="https://wa.me/573123256208?text=Hola%20Asadero%20Con%20Af%C3%A1n"
+  class="whatsapp-flotante"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contactar por WhatsApp"
+>💬</a>
+<footer (click)="onFooterClick()">
+  <p>© 2025 Asadero Con Afán — Hecho con ❤️ en Neiva</p>
+</footer>

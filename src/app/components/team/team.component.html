@@ -1,0 +1,21 @@
+<section class="pagina-header">
+  <h1>Nuestro equipo</h1>
+  <p>Las personas detrás del mejor pollo de Neiva</p>
+</section>
+<section class="equipo">
+  <div class="equipo-grid">
+    @for (person of members; track person.name) {
+      <article class="persona-card">
+        <img [src]="person.image" [alt]="'Foto de ' + person.name" class="persona-foto" loading="lazy">
+        <h3>{{ person.name }}</h3>
+        <span class="rol">{{ person.role }}</span>
+        <p class="historia">{{ person.story }}</p>
+      </article>
+    }
+  </div>
+</section>
+<section class="cta-equipo">
+  <h2>¿Quieres ser parte del equipo?</h2>
+  <p>Siempre buscamos personas apasionadas por el servicio y la buena comida.</p>
+  <a routerLink="/unete" class="btn-primary">Ver vacantes disponibles</a>
+</section>

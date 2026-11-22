@@ -1,0 +1,36 @@
+<main class="admin-login-page">
+  <section class="login-card">
+    <a routerLink="/" class="login-logo">🔥 Asadero Con Afán</a>
+    <p class="login-subtitulo">Panel de administración</p>
+    @if (mode === 'login') {
+      <h1>Iniciar sesión</h1>
+      <form class="formulario-hv" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="campo-grupo"><label for="admin-email">Correo</label><input id="admin-email" type="email" formControlName="email" autocomplete="username" required></div>
+        <div class="campo-grupo"><label for="admin-password">Contraseña</label><input id="admin-password" type="password" formControlName="password" autocomplete="current-password" required></div>
+        @if (message) { <p class="form-feedback success" role="status">{{ message }}</p> }
+        @if (error) { <p class="form-feedback error" role="alert">{{ error }}</p> }
+        <button class="btn-login" type="submit" [disabled]="busy">{{ busy ? 'Validando…' : 'Entrar al panel' }}</button>
+      </form>
+      <button class="link-button" type="button" (click)="mode = 'recover'; error = ''; message = ''">Olvidé mi contraseña</button>
+    } @else if (mode === 'recover') {
+      <h1>Recuperar contraseña</h1>
+      <form class="formulario-hv" [formGroup]="recoverForm" (ngSubmit)="recover()">
+        <div class="campo-grupo"><label for="recover-email">Correo de administrador</label><input id="recover-email" type="email" formControlName="email" autocomplete="email" required></div>
+        @if (message) { <p class="form-feedback success" role="status">{{ message }}</p> }
+        @if (error) { <p class="form-feedback error" role="alert">{{ error }}</p> }
+        <button class="btn-login" type="submit" [disabled]="busy">{{ busy ? 'Enviando…' : 'Enviar instrucciones' }}</button>
+      </form>
+      <button class="link-button" type="button" (click)="mode = 'login'; error = ''; message = ''">Volver a iniciar sesión</button>
+    } @else {
+      <h1>Cambiar contraseña</h1>
+      <form class="formulario-hv" [formGroup]="resetForm" (ngSubmit)="resetPassword()">
+        <div class="campo-grupo"><label for="new-password">Nueva contraseña (mínimo 12 caracteres)</label><input id="new-password" type="password" formControlName="password" autocomplete="new-password" required></div>
+        <div class="campo-grupo"><label for="confirm-password">Confirmar contraseña</label><input id="confirm-password" type="password" formControlName="confirmPassword" autocomplete="new-password" required></div>
+        @if (message) { <p class="form-feedback success" role="status">{{ message }}</p> }
+        @if (error) { <p class="form-feedback error" role="alert">{{ error }}</p> }
+        <button class="btn-login" type="submit" [disabled]="busy">{{ busy ? 'Actualizando…' : 'Guardar contraseña' }}</button>
+      </form>
+    }
+    <a routerLink="/" class="volver">← Volver al sitio</a>
+  </section>
+</main>

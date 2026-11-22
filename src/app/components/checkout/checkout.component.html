@@ -1,0 +1,77 @@
+<section class="pagina-header">
+  <h1>Tu pedido</h1>
+  <p>Revisa tu carrito y completa los datos de entrega</p>
+</section>
+<section class="formulario-pagina">
+  @if (order) {
+    <div class="content-card">
+      <h2>¡Pedido recibido!</h2>
+      <p>Número de orden: <strong>{{ order.numeroOrden }}</strong></p>
+      <p>Estado: {{ order.estado }}</p>
+      <div class="cart-panel">
+        @for (item of order.productos; track item.productId) {
+          <div class="order-summary-row"><span>{{ item.name }} × {{ item.quantity }}</span><span>{{ item.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
+        }
+        <div class="order-summary-row"><span>Subtotal</span><span>{{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
+        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
+        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong></div>
+      </div>
+      <div class="order-status-steps">
+        @for (status of statuses; track status) {
+          <span [class.current]="statuses.indexOf(order.estado) >= $index">{{ status }}</span>
+        }
+      </div>
+      <div class="hero-botones">
+        <a [routerLink]="['/seguimiento']" [queryParams]="{ orden: order.numeroOrden }" class="btn-primary">Seguir pedido</a>
+        <a [href]="whatsappLink(order)" class="btn-secundario" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>
+      </div>
+    </div>
+  } @else {
+    <div class="checkout-grid">
+      <div class="content-card">
+        <h2>Resumen de compra</h2>
+        @if (cart.items.length) {
+          @for (item of cart.items; track item.product.id) {
+            <div class="cart-line">
+              <span>{{ item.product.name }}<br><small>{{ item.product.price | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }} c/u</small></span>
+              <div class="cart-controls">
+                <button type="button" [attr.aria-label]="'Disminuir ' + item.product.name" (click)="cart.changeQuantity(item.product.id, -1)">−</button>
+                <span>{{ item.quantity }}</span>
+                <button type="button" [attr.aria-label]="'Aumentar ' + item.product.name" (click)="cart.changeQuantity(item.product.id, 1)">+</button>
+                <button type="button" class="btn-danger" (click)="cart.remove(item.product.id)">Eliminar</button>
+              </div>
+              <strong>{{ item.product.price * item.quantity | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong>
+            </div>
+          }
+        } @else {
+          <p>Tu carrito está vacío. <a routerLink="/menu">Explora el menú</a>.</p>
+        }
+        <div class="order-summary-row"><span>Subtotal</span><strong>{{ cart.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong></div>
+        <div class="order-summary-row"><span>Domicilio</span><strong>{{ deliveryFee === null ? 'Por confirmar' : (deliveryFee | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
+        <div class="order-summary-row"><strong>Total</strong><strong>{{ total === null ? 'Por confirmar' : (total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
+        @if (configError) { <p class="form-feedback error" role="status">{{ configError }}</p> }
+      </div>
+      <div class="content-card">
+        <h2>Datos de entrega</h2>
+        <form class="formulario-hv" [formGroup]="form" (ngSubmit)="submit()">
+          <div class="campo-grupo"><label for="cliente-nombre">Nombre *</label><input id="cliente-nombre" formControlName="nombre" autocomplete="name" required></div>
+          <div class="campo-grupo"><label for="cliente-telefono">Teléfono *</label><input id="cliente-telefono" formControlName="telefono" type="tel" autocomplete="tel" required></div>
+          <div class="campo-grupo"><label for="cliente-direccion">Dirección *</label><input id="cliente-direccion" formControlName="direccion" autocomplete="street-address" required></div>
+          <div class="campo-grupo"><label for="cliente-notas">Notas especiales</label><textarea id="cliente-notas" formControlName="notas" rows="3"></textarea></div>
+          <div class="campo-grupo">
+            <label for="cliente-pago">Método de pago *</label>
+            <select id="cliente-pago" formControlName="pago">
+              <option value="Efectivo">Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+              <option value="Tarjeta contraentrega">Tarjeta contraentrega</option>
+            </select>
+          </div>
+          @if (submitError) { <p class="form-feedback error" role="alert">{{ submitError }}</p> }
+          <button type="submit" class="btn-enviar" [disabled]="submitting || !cart.items.length || deliveryFee === null">
+            {{ submitting ? 'Registrando pedido…' : 'Confirmar pedido' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  }
+</section>

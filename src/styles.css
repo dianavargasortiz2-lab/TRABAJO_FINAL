@@ -1,0 +1,637 @@
+@import '../css/style.css';
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.form-feedback {
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.form-feedback.success {
+  color: #2e7d32;
+  background: #e8f5e9;
+}
+
+.form-feedback.error {
+  color: #c62828;
+  background: #ffebee;
+}
+
+.toolbar,
+.cart-line,
+.order-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toolbar {
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.toolbar input,
+.form-card input,
+.form-card select,
+.form-card textarea,
+.campo-opinion input,
+.campo-opinion textarea {
+  width: 100%;
+}
+
+.toolbar input {
+  max-width: 420px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  padding: 12px 18px;
+}
+
+.filter-buttons,
+.cart-controls,
+.order-status-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-buttons button,
+.cart-controls button {
+  border: 1px solid rgba(255, 82, 0, 0.3);
+  border-radius: 30px;
+  padding: 8px 14px;
+  background: white;
+  color: var(--oscuro);
+  cursor: pointer;
+}
+
+.filter-buttons button.selected {
+  background: var(--naranja);
+  color: white;
+}
+
+.menu-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: auto;
+}
+
+.menu-actions button,
+.menu-actions a,
+.btn-secondary-action {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.menu-actions .add-cart,
+.btn-secondary-action {
+  border: 1px solid var(--naranja);
+  background: linear-gradient(135deg, var(--naranja), #e54800);
+  color: white;
+  box-shadow: 0 5px 14px rgba(255, 82, 0, 0.2);
+}
+
+.menu-actions .order-whatsapp {
+  border: 1px solid #e8dfd3;
+  background: #fffdf9;
+  color: var(--oscuro);
+}
+
+.menu-actions .order-whatsapp span {
+  color: var(--naranja);
+  font-size: 18px;
+}
+
+.menu-actions button:hover,
+.menu-actions a:hover,
+.btn-secondary-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(50, 35, 20, 0.14);
+}
+
+.menu-actions .order-whatsapp:hover {
+  border-color: var(--naranja);
+  background: #fff3e0;
+  color: var(--naranja);
+}
+
+.menu-actions button:focus-visible,
+.menu-actions a:focus-visible,
+.filter-buttons button:focus-visible,
+.cart-controls button:focus-visible {
+  outline: 3px solid rgba(255, 82, 0, 0.35);
+  outline-offset: 2px;
+}
+
+.cart-panel,
+.content-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  margin: 24px 0;
+}
+
+.cart-line {
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.cart-line:last-child {
+  border-bottom: 0;
+}
+
+.cart-controls button {
+  padding: 4px 10px;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.field-error {
+  color: #c62828;
+  font-size: 12px;
+}
+
+.vacante-requisitos {
+  padding-left: 20px;
+  color: var(--texto-suave);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.order-status-steps > span {
+  border-radius: 30px;
+  background: #eee;
+  color: #666;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.order-status-steps > span.current {
+  background: var(--naranja);
+  color: white;
+}
+
+.admin-shell {
+  min-height: 100vh;
+  padding: 32px;
+  background: var(--oscuro);
+  color: white;
+}
+
+.admin-shell .seccion-titulo,
+.admin-shell .seccion-desc {
+  color: white;
+}
+
+.admin-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.admin-nav button {
+  border: 1px solid #333;
+  border-radius: 24px;
+  background: #1a1a1a;
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.admin-list {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  background: #1a1a1a;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-actions button {
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.hidden-file-input {
+  display: block;
+  margin: 8px 0;
+}
+
+.unete-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 60px 40px;
+}
+
+.seccion-titulo,
+.opiniones-titulo-seccion {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  color: var(--oscuro);
+  margin-bottom: 10px;
+}
+
+.seccion-subtitulo,
+.opiniones-subtitulo {
+  color: var(--texto-suave);
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+.vacantes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.vacante-nueva {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  border-top: 4px solid var(--naranja);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vacante-nueva h3 {
+  font-size: 18px;
+  color: var(--oscuro);
+}
+
+.vacante-nueva > p {
+  color: var(--texto-suave);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.vacante-icono {
+  font-size: 36px;
+}
+
+.vacante-meta .badge-tipo {
+  background: #fff3e0;
+  color: #e65100;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.btn-aplicar {
+  border: 0;
+  cursor: pointer;
+  background: var(--naranja);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+.opiniones-seccion {
+  background: var(--gris-claro);
+  padding: 60px;
+  margin-top: 60px;
+}
+
+.opiniones-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.opiniones-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.opinion-form-card,
+.reseña-card {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+.opinion-form-card h3,
+.reseñas-titulo {
+  font-family: 'Playfair Display', serif;
+  color: var(--oscuro);
+}
+
+.form-desc,
+.reseña-texto {
+  color: var(--texto-suave);
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 8px 0 20px;
+}
+
+.opinion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.campo-opinion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-opinion label,
+.estrellas-grupo label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.estrellas {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.estrellas input {
+  display: none;
+}
+
+.estrellas label {
+  color: #ddd;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.estrellas input:checked ~ label,
+.estrellas label:hover,
+.estrellas label:hover ~ label {
+  color: #f5a623;
+}
+
+.campo-opinion input,
+.campo-opinion textarea,
+.estrellas-grupo select {
+  padding: 12px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  color: var(--texto);
+}
+
+.aviso-moderacion {
+  background: #fff8e1;
+  color: #f57f17;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+  border-left: 3px solid #ffb300;
+}
+
+.btn-opinion {
+  background: var(--naranja);
+  color: white;
+  border: 0;
+  padding: 13px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-opinion:disabled,
+.btn-login:disabled,
+.btn-enviar:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.reseñas-grid {
+  display: grid;
+  gap: 16px;
+  max-height: 600px;
+  overflow: auto;
+}
+
+.reseña-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.reseña-avatar {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--naranja);
+  color: white;
+}
+
+.reseña-info h4 {
+  color: var(--oscuro);
+}
+
+.reseña-fecha,
+.reseña-meta {
+  color: #888;
+  font-size: 12px;
+}
+
+.reseña-estrellas,
+.promedio-estrellas {
+  color: #f5a623;
+  margin: 8px 0;
+}
+
+.sin-reseñas {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+}
+
+.sin-reseñas span {
+  display: block;
+  font-size: 40px;
+}
+
+.admin-login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--oscuro);
+  padding: 20px;
+}
+
+.login-card {
+  background: var(--gris-oscuro);
+  border: 1px solid rgba(255, 82, 0, 0.2);
+  border-radius: 28px;
+  padding: 44px;
+  width: min(100%, 440px);
+}
+
+.login-logo {
+  display: block;
+  text-align: center;
+  color: var(--naranja);
+  font: 700 22px 'Playfair Display', serif;
+}
+
+.login-subtitulo,
+.volver {
+  display: block;
+  text-align: center;
+  color: #aaa;
+  margin: 12px 0 28px;
+}
+
+.login-card h1 {
+  color: white;
+  text-align: center;
+  font: 700 28px 'Playfair Display', serif;
+  margin-bottom: 20px;
+}
+
+.login-card .campo-grupo label {
+  color: #ddd;
+}
+
+.login-card .campo-grupo input {
+  background: var(--gris-medio);
+  color: white;
+}
+
+.btn-login {
+  width: 100%;
+  background: var(--naranja);
+  color: white;
+  border: 0;
+  padding: 15px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link-button {
+  display: block;
+  margin: 18px auto;
+  border: 0;
+  background: transparent;
+  color: var(--naranja);
+  cursor: pointer;
+}
+
+.admin-shell .resumen-card {
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-shell .resumen-label {
+  display: block;
+}
+
+.admin-shell select,
+.admin-shell input,
+.admin-shell textarea {
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .admin-shell {
+    padding: 20px 14px;
+  }
+
+  .unete-wrapper {
+    padding: 50px 20px 30px;
+  }
+
+  .opiniones-seccion {
+    padding: 40px 20px 60px;
+    margin-top: 30px;
+  }
+
+  .opiniones-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .opinion-form-card {
+    padding: 24px 18px;
+  }
+
+  .fila-dos {
+    grid-template-columns: 1fr;
+  }
+
+  .login-card {
+    padding: 32px 22px;
+  }
+
+  .toolbar {
+    align-items: stretch;
+  }
+
+  .cart-line {
+    align-items: flex-start;
+  }
+
+  .menu-actions {
+    grid-template-columns: 1fr;
+  }
+}
