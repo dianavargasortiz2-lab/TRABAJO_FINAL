@@ -12,7 +12,19 @@ Aplicación Angular con API Express y MongoDB. El sitio público conserva las p�
 6. Crea/actualiza el acceso administrador con `npm run seed:admin`.
 7. En terminales separadas ejecuta `npm run start:api` y `npm start`.
 
-Angular usa `proxy.conf.json` para enviar `/api` al servidor local en el puerto 3000. En producción, publica Angular detrás de un servidor que enrute `/api` al servicio Express (y define `FRONTEND_ORIGIN` para el origen público). La API comienza únicamente si puede conectarse a MongoDB.
+Angular usa `proxy.conf.json` para enviar `/api` al servidor local en el puerto 3000. La API comienza únicamente si puede conectarse a MongoDB.
+
+## Despliegue público en Render
+
+El archivo `render.yaml` configura un único servicio web: compila Angular y Express sirve la aplicación y sus rutas `/api` desde el mismo dominio. Esto evita tener que configurar un proxy entre dos servicios.
+
+1. En Render, crea un **Blueprint** y conecta el repositorio público `dianavargasortiz2-lab/TRABAJO_FINAL`.
+2. Al sincronizar el Blueprint, define `MONGO_URI` como variable privada en Render usando la URI de MongoDB Atlas. No la agregues a GitHub.
+3. En Atlas, permite la conexión desde las direcciones de salida que Render muestra para el servicio. Evita abrir el acceso a todas las IP salvo que sea estrictamente temporal.
+4. Render genera `JWT_SECRET` y publica la aplicación en una URL `onrender.com`. Comprueba `/api/health` para confirmar que el servicio responde.
+5. Define `DELIVERY_FEE_COP` con el costo real de domicilio en la configuración del servicio para habilitar pedidos. Para habilitar el acceso administrativo, configura localmente `ADMIN_EMAIL` y `ADMIN_PASSWORD` en `.env` y ejecuta `npm run seed:admin` contra el mismo Atlas.
+
+El plan gratuito de Render puede suspender el servicio tras un periodo sin actividad; la primera visita posterior puede tardar en responder.
 
 ## Recuperación de acceso
 

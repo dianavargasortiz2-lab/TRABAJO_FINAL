@@ -24,6 +24,13 @@ const {
 const app = express();
 const orderStates = ['Recibido', 'En preparación', 'En camino', 'Entregado'];
 const paymentMethods = ['Efectivo', 'Transferencia', 'Tarjeta contraentrega'];
+const frontendOrigins = (
+  process.env.FRONTEND_ORIGIN ||
+  process.env.RENDER_EXTERNAL_URL ||
+  'http://localhost:4200'
+)
+  .split(',')
+  .map((origin) => origin.trim());
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024, files: 1 },
@@ -39,9 +46,7 @@ app.disable('x-powered-by');
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.FRONTEND_ORIGIN
-      ? process.env.FRONTEND_ORIGIN.split(',').map((origin) => origin.trim())
-      : 'http://localhost:4200',
+    origin: frontendOrigins,
   }),
 );
 app.use(express.json({ limit: '100kb' }));
@@ -406,6 +411,23 @@ app.delete('/api/admin/opinions/:id', async (req, res) => {
   if (!opinion) return res.status(404).json({ message: 'No se encontró la opinión.' });
   res.status(204).end();
 });
+
+if (process.env.NODE_ENV === 'production') {
+  const clientBuildPath = path.resolve(__dirname, '../dist/asadero-con-afan/browser');
+  app.use(express.static(clientBuildPath));
+  app.use((req, res, next) => {
+    if (
+      req.method !== 'GET' ||
+      req.path === '/api' ||
+      req.path.startsWith('/api/')
+    ) {
+      return next();
+    }
+    res.sendFile(path.join(clientBuildPath, 'index.html'), (error) => {
+      if (error) next(error);
+    });
+  });
+}
 
 app.use('/api', (_req, res) => res.status(404).json({ message: 'Endpoint no encontrado.' }));
 
