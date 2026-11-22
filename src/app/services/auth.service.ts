@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AdminUser } from '../models/domain.models';
+import { apiUrl } from './api-url';
 
 interface LoginResponse {
   token: string;
@@ -23,7 +24,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>('/api/auth/login', { email, password })
+      .post<LoginResponse>(apiUrl('/api/auth/login'), { email, password })
       .pipe(tap((response) => sessionStorage.setItem(this.tokenKey, response.token)));
   }
 
@@ -32,13 +33,13 @@ export class AuthService {
   }
 
   recoverPassword(email: string): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>('/api/auth/forgot-password', {
+    return this.http.post<{ message: string }>(apiUrl('/api/auth/forgot-password'), {
       email,
     });
   }
 
   resetPassword(token: string, password: string): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>('/api/auth/reset-password', {
+    return this.http.post<{ message: string }>(apiUrl('/api/auth/reset-password'), {
       token,
       password,
     });

@@ -30,7 +30,8 @@ const frontendOrigins = (
   'http://localhost:4200'
 )
   .split(',')
-  .map((origin) => origin.trim());
+  .map((origin) => origin.trim())
+  .concat('https://dianavargasortiz2-lab.github.io');
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024, files: 1 },

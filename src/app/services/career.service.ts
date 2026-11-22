@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JobApplication, Opinion, Vacancy } from '../models/domain.models';
+import { apiUrl } from './api-url';
 
 @Injectable({ providedIn: 'root' })
 export class CareerService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api';
+  private readonly baseUrl = apiUrl('/api');
 
   getVacancies(): Observable<Vacancy[]> {
     return this.http.get<Vacancy[]>(`${this.baseUrl}/vacancies`);
@@ -44,7 +45,7 @@ export class CareerService {
   }
 
   markApplicationReviewed(id: string): Observable<JobApplication> {
-    return this.http.patch<JobApplication>(`/api/admin/applications/${id}`, {
+    return this.http.patch<JobApplication>(apiUrl(`/api/admin/applications/${id}`), {
       revisada: true,
     });
   }

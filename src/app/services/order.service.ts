@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeliveryDetails, Order, OrderStatus } from '../models/domain.models';
+import { apiUrl } from './api-url';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api';
+  private readonly baseUrl = apiUrl('/api');
 
   createOrder(payload: {
     cliente: DeliveryDetails;

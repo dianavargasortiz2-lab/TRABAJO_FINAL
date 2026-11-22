@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { OrderService } from '../../services/order.service';
+import { apiUrl } from '../../services/api-url';
 import { DeliveryDetails, Order } from '../../models/domain.models';
 
 interface StoreConfig {
@@ -42,7 +43,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<StoreConfig>('/api/store-config').subscribe({
+    this.http.get<StoreConfig>(apiUrl('/api/store-config')).subscribe({
       next: (config) => {
         this.deliveryFee = config.deliveryFee;
         if (this.deliveryFee === null) {
