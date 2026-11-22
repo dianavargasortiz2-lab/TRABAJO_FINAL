@@ -9,7 +9,7 @@ bootstrapApplication(AppComponent, appConfig).catch((error: unknown) => {
 
 if (!isDevMode() && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch((error: unknown) => {
+    navigator.serviceWorker.register(`${document.baseURI}sw.js`).catch((error: unknown) => {
       console.error('No se pudo registrar el Service Worker.', error);
     });
   });
