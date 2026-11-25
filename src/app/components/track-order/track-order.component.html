@@ -25,8 +25,8 @@
           <div class="order-summary-row"><span>{{ item.name }} × {{ item.quantity }}</span><span>{{ item.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
         }
         <div class="order-summary-row"><span>Subtotal</span><span>{{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
-        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
-        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong></div>
+        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio === null ? 'Por confirmar' : (order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</span></div>
+        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total === null ? 'Por confirmar' : (order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
       </div>
       <a [href]="whatsappLink()" target="_blank" rel="noopener noreferrer" class="btn-secondary-action">Consultar por WhatsApp</a>
     </div>

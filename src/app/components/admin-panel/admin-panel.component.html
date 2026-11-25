@@ -39,7 +39,7 @@
             <div class="item-info">
               <h2 class="item-nombre">Orden {{ order.numeroOrden }} · {{ order.cliente.nombre }}</h2>
               <p class="item-detalle">{{ order.cliente.telefono }} · {{ order.cliente.direccion }}</p>
-              <p class="item-detalle">{{ order.productos.length }} productos · Subtotal {{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }} · Domicilio {{ order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }} · Total {{ order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</p>
+              <p class="item-detalle">{{ order.productos.length }} productos · Subtotal {{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }} · Domicilio {{ order.costoDomicilio === null ? 'Por confirmar' : (order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }} · Total {{ order.total === null ? 'Por confirmar' : (order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</p>
               <ul>
                 @for (item of order.productos; track item.productId) {
                   <li>{{ item.name }} × {{ item.quantity }} — {{ item.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</li>

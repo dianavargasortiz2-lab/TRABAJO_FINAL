@@ -59,8 +59,8 @@ const orderSchema = new mongoose.Schema(
     },
     productos: { type: [orderItemSchema], required: true },
     subtotal: { type: Number, required: true, min: 0 },
-    costoDomicilio: { type: Number, required: true, min: 0 },
-    total: { type: Number, required: true, min: 0 },
+    costoDomicilio: { type: Number, min: 0, default: null },
+    total: { type: Number, min: 0, default: null },
     estado: {
       type: String,
       enum: ['Recibido', 'En preparación', 'En camino', 'Entregado'],

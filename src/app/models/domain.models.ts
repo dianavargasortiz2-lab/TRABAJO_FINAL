@@ -76,8 +76,8 @@ export interface Order {
   cliente: DeliveryDetails;
   productos: OrderItem[];
   subtotal: number;
-  costoDomicilio: number;
-  total: number;
+  costoDomicilio: number | null;
+  total: number | null;
   estado: OrderStatus;
   createdAt?: string;
   historial?: { estado: OrderStatus; fecha: string }[];

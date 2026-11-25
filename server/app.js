@@ -160,9 +160,6 @@ app.post('/api/opinions', async (req, res) => {
 app.post('/api/orders', async (req, res) => {
   const { cliente, productos } = req.body;
   const deliveryFee = getDeliveryFee();
-  if (deliveryFee === null) {
-    return res.status(503).json({ message: 'El costo del domicilio no está configurado. No se registró el pedido.' });
-  }
   if (
     !cliente ||
     !cliente.nombre?.trim() ||
@@ -222,7 +219,7 @@ app.post('/api/orders', async (req, res) => {
     productos: orderItems,
     subtotal,
     costoDomicilio: deliveryFee,
-    total: subtotal + deliveryFee,
+    total: deliveryFee === null ? null : subtotal + deliveryFee,
     estado: orderStates[0],
     historial: [{ estado: orderStates[0], fecha: new Date() }],
   });

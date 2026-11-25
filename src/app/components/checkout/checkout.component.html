@@ -13,8 +13,8 @@
           <div class="order-summary-row"><span>{{ item.name }} × {{ item.quantity }}</span><span>{{ item.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
         }
         <div class="order-summary-row"><span>Subtotal</span><span>{{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
-        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
-        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong></div>
+        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio === null ? 'Por confirmar' : (order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</span></div>
+        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total === null ? 'Por confirmar' : (order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
       </div>
       <div class="order-status-steps">
         @for (status of statuses; track status) {
@@ -49,7 +49,7 @@
         <div class="order-summary-row"><span>Subtotal</span><strong>{{ cart.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong></div>
         <div class="order-summary-row"><span>Domicilio</span><strong>{{ deliveryFee === null ? 'Por confirmar' : (deliveryFee | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
         <div class="order-summary-row"><strong>Total</strong><strong>{{ total === null ? 'Por confirmar' : (total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
-        @if (configError) { <p class="form-feedback error" role="status">{{ configError }}</p> }
+        @if (configNotice) { <p class="form-feedback success" role="status">{{ configNotice }}</p> }
       </div>
       <div class="content-card">
         <h2>Datos de entrega</h2>
@@ -67,7 +67,7 @@
             </select>
           </div>
           @if (submitError) { <p class="form-feedback error" role="alert">{{ submitError }}</p> }
-          <button type="submit" class="btn-enviar" [disabled]="submitting || !cart.items.length || deliveryFee === null">
+          <button type="submit" class="btn-enviar" [disabled]="submitting || !cart.items.length">
             {{ submitting ? 'Registrando pedido…' : 'Confirmar pedido' }}
           </button>
         </form>

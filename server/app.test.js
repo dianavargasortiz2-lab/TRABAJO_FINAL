@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { once } = require('node:events');
 const app = require('./app');
+const { Product, Customer, Order } = require('./models');
 
 let server;
 let baseUrl;
@@ -35,14 +36,64 @@ test('store configuration reports an unset delivery fee explicitly', async () =>
   assert.deepEqual(await response.json(), { deliveryFee: null });
 });
 
-test('order endpoint refuses an order until a real delivery fee is configured', async () => {
-  const response = await fetch(`${baseUrl}/api/orders`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ cliente: {}, productos: [] }),
+test('order endpoint saves an order with delivery fee pending confirmation', async () => {
+  const originalFind = Product.find;
+  const originalFindOneAndUpdate = Customer.findOneAndUpdate;
+  const originalCreate = Order.create;
+  Product.find = () => ({
+    lean: async () => [{ productId: 'pollo-entero', name: 'Pollo', price: 30000 }],
   });
-  assert.equal(response.status, 503);
-  assert.match((await response.json()).message, /costo del domicilio no está configurado/);
+  Customer.findOneAndUpdate = async () => ({});
+  Order.create = async (order) => order;
+
+  try {
+    const response = await fetch(`${baseUrl}/api/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cliente: {
+          nombre: 'Cliente de prueba',
+          telefono: '3001234567',
+          direccion: 'Calle 1 # 2-3',
+          pago: 'Efectivo',
+        },
+        productos: [{ productId: 'pollo-entero', quantity: 1 }],
+      }),
+    });
+    assert.equal(response.status, 201);
+    const order = await response.json();
+    assert.equal(order.subtotal, 30000);
+    assert.equal(order.costoDomicilio, null);
+    assert.equal(order.total, null);
+  } finally {
+    Product.find = originalFind;
+    Customer.findOneAndUpdate = originalFindOneAndUpdate;
+    Order.create = originalCreate;
+  }
+});
+
+test('order schema accepts orders whose delivery fee and total are pending', async () => {
+  const order = new Order({
+    numeroOrden: 'CAF-TEST',
+    cliente: {
+      nombre: 'Cliente',
+      telefono: '3001234567',
+      direccion: 'Calle 1 # 2-3',
+      pago: 'Efectivo',
+    },
+    productos: [{
+      productId: 'pollo-entero',
+      name: 'Pollo',
+      price: 30000,
+      quantity: 1,
+      subtotal: 30000,
+    }],
+    subtotal: 30000,
+    costoDomicilio: null,
+    total: null,
+    estado: 'Recibido',
+  });
+  await assert.doesNotReject(order.validate());
 });
 
 test('admin endpoints require a signed-in session', async () => {

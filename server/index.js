@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const app = require('./app');
+const { bootstrapDatabase } = require('./bootstrap');
 
 const port = Number(process.env.PORT || 3000);
 const mongoUri = process.env.MONGO_URI;
@@ -17,12 +18,13 @@ if (mongoUri.includes('<db_password>')) {
 
 mongoose
   .connect(mongoUri)
-  .then(() => {
+  .then(async () => {
+    await bootstrapDatabase();
     app.listen(port, () => {
       console.log(`API lista en http://localhost:${port}`);
     });
   })
   .catch((error) => {
-    console.error('No se pudo conectar a MongoDB:', error.message);
+    console.error('No se pudo iniciar la API:', error.message);
     process.exit(1);
   });

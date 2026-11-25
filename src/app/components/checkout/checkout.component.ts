@@ -20,7 +20,7 @@ interface StoreConfig {
 })
 export class CheckoutComponent implements OnInit {
   deliveryFee: number | null = null;
-  configError = '';
+  configNotice = '';
   submitError = '';
   submitting = false;
   order: Order | null = null;
@@ -46,12 +46,10 @@ export class CheckoutComponent implements OnInit {
     this.http.get<StoreConfig>(apiUrl('/api/store-config')).subscribe({
       next: (config) => {
         this.deliveryFee = config.deliveryFee;
-        if (this.deliveryFee === null) {
-          this.configError = 'El costo del domicilio aún no está configurado. No se realizará un cobro estimado.';
-        }
+        if (this.deliveryFee === null) this.configNotice = 'El costo del domicilio se confirmará contigo antes de preparar el pedido.';
       },
       error: () => {
-        this.configError = 'No se pudo consultar la configuración de domicilios. Verifica que la API y MongoDB estén disponibles.';
+        this.configNotice = 'No se pudo consultar el costo del domicilio; podrás enviar el pedido y se confirmará contigo.';
       },
     });
   }
@@ -70,10 +68,6 @@ export class CheckoutComponent implements OnInit {
     }
     if (!this.cart.items.length) {
       this.submitError = 'El carrito está vacío.';
-      return;
-    }
-    if (this.deliveryFee === null) {
-      this.submitError = 'No es posible confirmar el pedido hasta configurar el costo del domicilio.';
       return;
     }
     this.submitting = true;
