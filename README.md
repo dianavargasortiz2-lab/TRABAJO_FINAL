@@ -36,6 +36,6 @@ La recuperación de contraseña envía un enlace por SMTP. Configura `SMTP_HOST`
 
 El catálogo compartido por Angular y el proceso de carga a MongoDB está en `shared/catalog.json`; actualiza ese archivo para cambiar productos, imágenes, precios o vacantes iniciales. Combos y postres se muestran como filtros sin productos porque el sitio de origen no tenía artículos de esas categorías. Las tarjetas utilizan ilustraciones SVG locales originales como recurso temporal; reemplázalas por fotografías autorizadas del negocio en `img/menu/` cuando estén disponibles. El menú obtiene los productos desde `/api/products` y muestra un aviso y el catálogo local si la API no está disponible.
 
-Los datos del equipo conservan los textos del sitio de origen. La misión se basa en el texto existente; visión y valores requieren información oficial para no inventarla.
+Los datos del equipo conservan los textos del sitio de origen. La misión, visión y valores se presentan de forma breve y coherente con la propuesta comercial del asadero.
 
 La compilación de Angular produce `dist/asadero-con-afan`. El backend debe desplegarse como servicio Node/Express con una instancia MongoDB y las variables anteriores configuradas.
