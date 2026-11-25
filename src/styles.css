@@ -1,24 +1,13 @@
 @import '../css/style.css';
 
 .home-photo-preview {
-  position: relative;
   overflow: hidden;
-  background: #211a16;
-}
-
-.home-photo-preview::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 62%, #0f0f0f 100%);
-  content: '';
-  pointer-events: none;
+  background: #fff;
 }
 
 .home-photo-preview img {
   width: 100%;
-  height: clamp(200px, 28vw, 340px);
-  object-fit: cover;
-  object-position: center 52%;
+  height: auto;
 }
 
 button,
