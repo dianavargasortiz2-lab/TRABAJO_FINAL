@@ -150,7 +150,7 @@ a { text-decoration: none; }
 =========================== */
 .hero {
   background: var(--oscuro);
-  min-height: 65vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   padding: 80px 60px;
@@ -1039,7 +1039,7 @@ footer {
   /* Hero en móvil */
   .hero {
     padding: 60px 24px;
-    min-height: 58vh;
+    min-height: 75vh;
   }
 
   .hero-content h1 {
