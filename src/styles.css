@@ -1,16 +1,60 @@
 @import '../css/style.css';
 
-.home-photo-preview {
-  overflow: hidden;
-  background: var(--oscuro);
-  padding: 8px 0;
+.hero {
+  padding: clamp(190px, 22vw, 300px) 60px 56px;
 }
 
-.home-photo-preview img {
+.hero-banner {
+  position: absolute;
+  inset: 0 0 auto;
+  height: clamp(150px, 18vw, 230px);
+  overflow: hidden;
+  background: var(--oscuro);
+}
+
+.hero-banner-blur {
+  position: absolute;
+  inset: -18px;
+  width: calc(100% + 36px);
+  max-width: none;
+  height: calc(100% + 36px);
+  object-fit: cover;
+  filter: blur(18px) brightness(0.42);
+}
+
+.hero-banner-image {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hero-banner::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, var(--oscuro) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: clamp(190px, 22vw, 300px) 24px 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: clamp(145px, 30vw, 190px) 24px 44px;
+  }
+
+  .hero-banner {
+    height: clamp(110px, 22vw, 150px);
+  }
 }
 
 button,
