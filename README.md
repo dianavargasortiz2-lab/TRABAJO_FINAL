@@ -43,7 +43,7 @@ La compilación de Angular produce `dist/asadero-con-afan`. El backend debe desp
 ## Cómo cambiar las fotos del sitio
 
 1. Guarda cada foto en formato JPG, PNG o WebP dentro de `img/menu/` para los productos o `img/equipo/` para las personas.
-2. Usa nombres simples, en minúsculas y sin espacios, por ejemplo `pollo-entero.jpg` o `maria-garcia.jpg`.
+2. Usa nombres simples, en minúsculas y sin espacios, por ejemplo `pollo-entero.jpg` o `maria-garcia.jpg`. Conserva la extensión real del archivo (`.jpg`, `.png`, `.webp` o `.avif`); no uses `.svg` para una foto.
 3. Para cambiar un producto, abre `shared/catalog.json` y reemplaza el valor de `image` por una ruta relativa como `img/menu/pollo-entero.jpg`.
 4. Para cambiar una foto del equipo, abre `src/app/data/catalog.ts` y reemplaza la propiedad `image` de cada persona por `img/equipo/maria-garcia.jpg`.
 5. Ejecuta `npm run build` y confirma que las imágenes aparecen antes de subir los cambios a GitHub.
