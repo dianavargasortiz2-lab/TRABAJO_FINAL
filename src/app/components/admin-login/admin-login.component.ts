@@ -34,7 +34,7 @@ export class AdminLoginComponent {
       email: ['', [Validators.required, Validators.email]],
     });
     this.resetForm = this.fb.nonNullable.group({
-      password: ['', [Validators.required, Validators.minLength(12)]],
+      password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     });
     this.resetToken = route.snapshot.queryParamMap.get('reset');

@@ -36,8 +36,8 @@ async function bootstrapDatabase(databaseModels = models, catalogData = catalog,
   const email = environment.ADMIN_EMAIL?.trim().toLowerCase();
   const password = environment.ADMIN_PASSWORD;
   if (!email && !password) return;
-  if (!email || !password || password.length < 12) {
-    throw new Error('Configura ADMIN_EMAIL y una ADMIN_PASSWORD de al menos 12 caracteres.');
+  if (!email || !password) {
+    throw new Error('Configura ADMIN_EMAIL y ADMIN_PASSWORD.');
   }
 
   const passwordHash = await bcrypt.hash(password, 12);

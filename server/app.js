@@ -284,8 +284,8 @@ app.post('/api/auth/forgot-password', async (req, res) => {
 
 app.post('/api/auth/reset-password', async (req, res) => {
   const { token, password } = req.body;
-  if (typeof token !== 'string' || typeof password !== 'string' || password.length < 12) {
-    return res.status(400).json({ message: 'El enlace o la contraseña no son válidos. Usa al menos 12 caracteres.' });
+  if (typeof token !== 'string' || typeof password !== 'string' || password.length < 1) {
+    return res.status(400).json({ message: 'El enlace o la contraseña no son válidos.' });
   }
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
   const admin = await AdminUser.findOne({

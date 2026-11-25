@@ -5,7 +5,7 @@ Aplicación Angular con API Express y MongoDB. El sitio público conserva las p�
 ## Desarrollo local
 
 1. Instala Node.js 20.19+ y crea un clúster de MongoDB Atlas. En Atlas agrega el usuario de base de datos y autoriza la IP desde la que se ejecutará la API.
-2. Copia `.env.example` a `.env`; reemplaza `MONGO_URI` con la URI privada que entrega Atlas y configura un `JWT_SECRET` aleatorio, `ADMIN_EMAIL` y `ADMIN_PASSWORD` (mínimo 12 caracteres). Codifica en URL los caracteres especiales del usuario o contraseña. `.env` está excluido de Git; no compartas ni publiques sus valores.
+2. Copia `.env.example` a `.env`; reemplaza `MONGO_URI` con la URI privada que entrega Atlas y configura un `JWT_SECRET` aleatorio, `ADMIN_EMAIL` y `ADMIN_PASSWORD`. Codifica en URL los caracteres especiales del usuario o contraseña. `.env` está excluido de Git; no compartas ni publiques sus valores.
 3. Si defines `DELIVERY_FEE_COP`, la web muestra el total exacto. Si no está definido, los pedidos se reciben y guardan con el domicilio y total pendientes de confirmación; no se inventa ningún costo.
 4. Instala paquetes con `npm install`.
 5. En terminales separadas ejecuta `npm run start:api` y `npm start`. Al conectar con MongoDB, la API carga automáticamente los productos y vacantes iniciales que falten y crea el administrador inicial desde las variables del `.env`.
@@ -19,7 +19,7 @@ Angular usa `proxy.conf.json` para enviar `/api` al servidor local en el puerto 
 El archivo `render.yaml` configura un único servicio web: compila Angular y Express sirve la aplicación y sus rutas `/api` desde el mismo dominio. Esto evita tener que configurar un proxy entre dos servicios. Al iniciar, la API crea los productos y vacantes iniciales que falten sin reemplazar las vacantes que ya hayas editado, y crea el administrador inicial si configuras sus variables.
 
 1. En Render, crea un **Blueprint** y conecta el repositorio público `dianavargasortiz2-lab/TRABAJO_FINAL`.
-2. Al sincronizar el Blueprint, define `MONGO_URI`, `ADMIN_EMAIL` y `ADMIN_PASSWORD` como variables privadas en Render. Usa la URI de MongoDB Atlas y una contraseña única de al menos 12 caracteres. No agregues estos valores a GitHub.
+2. Al sincronizar el Blueprint, define `MONGO_URI`, `ADMIN_EMAIL` y `ADMIN_PASSWORD` como variables privadas en Render. Usa la URI de MongoDB Atlas y una contraseña segura para el administrador. No agregues estos valores a GitHub.
 3. En Atlas, permite la conexión desde las direcciones de salida que Render muestra para el servicio. Evita abrir el acceso a todas las IP salvo que sea estrictamente temporal.
 4. Render genera `JWT_SECRET` y publica la aplicación en una URL `onrender.com`. Comprueba `/api/health` para confirmar que el servicio responde.
 5. Opcionalmente define `DELIVERY_FEE_COP` con el costo real del domicilio en la configuración del servicio; si lo dejas vacío, los pedidos se guardarán y el costo se confirmará con el cliente. La API crea el administrador inicial al iniciar. Para cambiar su contraseña después, configura localmente `ADMIN_EMAIL` y `ADMIN_PASSWORD` en `.env` y ejecuta `npm run seed:admin` contra el mismo Atlas.
