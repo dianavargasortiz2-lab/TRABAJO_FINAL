@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,16 +18,16 @@ type AdminTab = 'resumen' | 'pedidos' | 'vacantes' | 'postulaciones' | 'opinione
   templateUrl: './admin-panel.component.html',
 })
 export class AdminPanelComponent implements OnInit {
-  tab: AdminTab = 'resumen';
-  orders: Order[] = [];
-  vacancies: Vacancy[] = [];
-  applications: JobApplication[] = [];
-  opinions: Opinion[] = [];
-  selectedVacancy = '';
-  message = '';
-  error = '';
-  editingVacancy: Vacancy | null = null;
-  showVacancyForm = false;
+  readonly tab = signal<AdminTab>('resumen');
+  readonly orders = signal<Order[]>([]);
+  readonly vacancies = signal<Vacancy[]>([]);
+  readonly applications = signal<JobApplication[]>([]);
+  readonly opinions = signal<Opinion[]>([]);
+  readonly selectedVacancy = signal('');
+  readonly message = signal('');
+  readonly error = signal('');
+  readonly editingVacancy = signal<Vacancy | null>(null);
+  readonly showVacancyForm = signal(false);
   readonly states: OrderStatus[] = ['Recibido', 'En preparación', 'En camino', 'Entregado'];
   readonly vacancyForm;
 
@@ -66,9 +66,9 @@ export class AdminPanelComponent implements OnInit {
   }
 
   setTab(tab: AdminTab): void {
-    this.tab = tab;
-    this.message = '';
-    this.error = '';
+    this.tab.set(tab);
+    this.message.set('');
+    this.error.set('');
   }
 
   changeOrderStatus(order: Order, event: Event): void {
@@ -76,7 +76,7 @@ export class AdminPanelComponent implements OnInit {
     if (!order._id || !this.states.includes(status)) return;
     this.ordersApi.updateOrderStatus(order._id, status).subscribe({
       next: () => {
-        this.message = `El pedido ${order.numeroOrden} se actualizó a ${status}.`;
+        this.message.set(`El pedido ${order.numeroOrden} se actualizó a ${status}.`);
         this.loadOrders();
       },
       error: (error: unknown) => this.showError(error, 'No se pudo actualizar el pedido.'),
@@ -84,8 +84,8 @@ export class AdminPanelComponent implements OnInit {
   }
 
   openVacancy(vacancy?: Vacancy): void {
-    this.editingVacancy = vacancy ?? null;
-    this.showVacancyForm = true;
+    this.editingVacancy.set(vacancy ?? null);
+    this.showVacancyForm.set(true);
     this.vacancyForm.reset({
       cargo: vacancy?.cargo ?? '',
       jornada: vacancy?.jornada ?? 'Tiempo completo',
@@ -102,15 +102,16 @@ export class AdminPanelComponent implements OnInit {
       return;
     }
     const form = this.vacancyForm.getRawValue();
+    const editingVacancy = this.editingVacancy();
     const vacancy = {
       ...form,
       requisitos: form.requisitos.split('\n').map((item) => item.trim()).filter(Boolean),
-      ...(this.editingVacancy ? { _id: this.editingVacancy._id } : {}),
+      ...(editingVacancy ? { _id: editingVacancy._id } : {}),
     };
     this.careers.saveVacancy(vacancy).subscribe({
       next: () => {
-        this.showVacancyForm = false;
-        this.message = 'Vacante guardada.';
+        this.showVacancyForm.set(false);
+        this.message.set('Vacante guardada.');
         this.loadVacancies();
       },
       error: (error: unknown) => this.showError(error, 'No se pudo guardar la vacante.'),
@@ -128,7 +129,7 @@ export class AdminPanelComponent implements OnInit {
     if (!window.confirm(`¿Eliminar la vacante “${vacancy.cargo}”?`)) return;
     this.careers.deleteVacancy(vacancy._id).subscribe({
       next: () => {
-        this.message = 'Vacante eliminada.';
+        this.message.set('Vacante eliminada.');
         this.loadVacancies();
       },
       error: (error: unknown) => this.showError(error, 'No se pudo eliminar la vacante.'),
@@ -164,7 +165,7 @@ export class AdminPanelComponent implements OnInit {
     if (!opinion._id) return;
     this.adminApi.approveOpinion(opinion._id).subscribe({
       next: () => {
-        this.message = 'Opinión aprobada.';
+        this.message.set('Opinión aprobada.');
         this.loadOpinions();
       },
       error: (error: unknown) => this.showError(error, 'No se pudo aprobar la opinión.'),
@@ -175,7 +176,7 @@ export class AdminPanelComponent implements OnInit {
     if (!opinion._id || !window.confirm('¿Eliminar esta opinión?')) return;
     this.adminApi.deleteOpinion(opinion._id).subscribe({
       next: () => {
-        this.message = 'Opinión eliminada.';
+        this.message.set('Opinión eliminada.');
         this.loadOpinions();
       },
       error: (error: unknown) => this.showError(error, 'No se pudo eliminar la opinión.'),
@@ -190,36 +191,37 @@ export class AdminPanelComponent implements OnInit {
 
   private loadOrders(): void {
     this.ordersApi.getAdminOrders().subscribe({
-      next: (orders) => (this.orders = orders),
+      next: (orders) => this.orders.set(orders),
       error: (error: unknown) => this.showError(error, 'No se pudieron cargar los pedidos.'),
     });
   }
 
   private loadVacancies(): void {
     this.careers.adminVacancies().subscribe({
-      next: (vacancies) => (this.vacancies = vacancies),
+      next: (vacancies) => this.vacancies.set(vacancies),
       error: (error: unknown) => this.showError(error, 'No se pudieron cargar las vacantes.'),
     });
   }
 
   private loadApplications(): void {
-    this.careers.adminApplications(this.selectedVacancy || undefined).subscribe({
-      next: (applications) => (this.applications = applications),
+    this.careers.adminApplications(this.selectedVacancy() || undefined).subscribe({
+      next: (applications) => this.applications.set(applications),
       error: (error: unknown) => this.showError(error, 'No se pudieron cargar las postulaciones.'),
     });
   }
 
   private loadOpinions(): void {
     this.adminApi.getOpinions().subscribe({
-      next: (opinions) => (this.opinions = opinions),
+      next: (opinions) => this.opinions.set(opinions),
       error: (error: unknown) => this.showError(error, 'No se pudieron cargar las opiniones.'),
     });
   }
 
   private showError(error: unknown, fallback: string): void {
-    this.error =
+    this.error.set(
       error instanceof HttpErrorResponse
         ? error.error?.message ?? fallback
-        : fallback;
+        : fallback,
+    );
   }
 }

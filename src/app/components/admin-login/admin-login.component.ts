@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,9 +12,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AdminLoginComponent {
   mode: 'login' | 'recover' | 'reset' = 'login';
-  message = '';
-  error = '';
-  busy = false;
+  readonly message = signal('');
+  readonly error = signal('');
+  readonly busy = signal(false);
   private readonly resetToken: string | null;
   readonly loginForm;
   readonly recoverForm;
@@ -42,13 +42,13 @@ export class AdminLoginComponent {
   }
 
   login(): void {
-    this.message = '';
-    this.error = '';
+    this.message.set('');
+    this.error.set('');
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
-    this.busy = true;
+    this.busy.set(true);
     const { email, password } = this.loginForm.getRawValue();
     this.auth.login(email, password).subscribe({
       next: () => void this.router.navigate(['/admin']),
@@ -57,40 +57,40 @@ export class AdminLoginComponent {
   }
 
   recover(): void {
-    this.message = '';
-    this.error = '';
+    this.message.set('');
+    this.error.set('');
     if (this.recoverForm.invalid) {
       this.recoverForm.markAllAsTouched();
       return;
     }
-    this.busy = true;
+    this.busy.set(true);
     this.auth.recoverPassword(this.recoverForm.controls.email.value).subscribe({
       next: (response) => {
-        this.message = response.message;
-        this.busy = false;
+        this.message.set(response.message);
+        this.busy.set(false);
       },
       error: (error: unknown) => this.fail(error, 'No se pudo solicitar la recuperación.'),
     });
   }
 
   resetPassword(): void {
-    this.message = '';
-    this.error = '';
+    this.message.set('');
+    this.error.set('');
     if (this.resetForm.invalid) {
       this.resetForm.markAllAsTouched();
       return;
     }
     const { password, confirmPassword } = this.resetForm.getRawValue();
     if (password !== confirmPassword || !this.resetToken) {
-      this.error = 'Las contraseñas deben coincidir y el enlace debe ser válido.';
+      this.error.set('Las contraseñas deben coincidir y el enlace debe ser válido.');
       return;
     }
-    this.busy = true;
+    this.busy.set(true);
     this.auth.resetPassword(this.resetToken, password).subscribe({
       next: (response) => {
         this.mode = 'login';
-        this.message = response.message;
-        this.busy = false;
+        this.message.set(response.message);
+        this.busy.set(false);
         void this.router.navigate(['/admin/login']);
       },
       error: (error: unknown) => this.fail(error, 'No se pudo cambiar la contraseña.'),
@@ -98,10 +98,11 @@ export class AdminLoginComponent {
   }
 
   private fail(error: unknown, fallback: string): void {
-    this.error =
+    this.error.set(
       error instanceof HttpErrorResponse
         ? error.error?.message ?? fallback
-        : fallback;
-    this.busy = false;
+        : fallback,
+    );
+    this.busy.set(false);
   }
 }

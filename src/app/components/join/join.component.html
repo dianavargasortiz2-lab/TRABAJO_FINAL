@@ -5,11 +5,11 @@
 <section class="unete-wrapper">
   <h2 class="seccion-titulo">Vacantes disponibles</h2>
   <p class="seccion-subtitulo">Selecciona la vacante que te interesa y completa el formulario.</p>
-  @if (vacancyNotice) {
-    <p class="form-feedback error" role="status">{{ vacancyNotice }}</p>
+  @if (vacancyNotice()) {
+    <p class="form-feedback error" role="status">{{ vacancyNotice() }}</p>
   }
   <div class="vacantes-grid">
-    @for (vacancy of vacancies; track vacancy._id) {
+    @for (vacancy of vacancies(); track vacancy._id) {
       <article class="vacante-nueva">
         <div class="vacante-icono">💼</div>
         <h3>{{ vacancy.cargo }}</h3>
@@ -58,7 +58,7 @@
         <label for="app-vacante">Cargo seleccionado *</label>
         <select id="app-vacante" formControlName="vacante" required>
           <option value="">Selecciona una vacante</option>
-          @for (vacancy of vacancies; track vacancy._id) {
+          @for (vacancy of vacancies(); track vacancy._id) {
             <option [value]="vacancy._id">{{ vacancy.cargo }}</option>
           }
         </select>
@@ -128,10 +128,10 @@
         <input id="app-cv" class="hidden-file-input" type="file" accept="application/pdf,.pdf" (change)="onFileSelected($event)" required>
         @if (selectedFile) { <small>{{ selectedFile.name }}</small> }
       </div>
-      @if (applicationMessage) { <p class="form-feedback success" role="status">{{ applicationMessage }}</p> }
-      @if (applicationError) { <p class="form-feedback error" role="alert">{{ applicationError }}</p> }
-      <button type="submit" class="btn-enviar" [disabled]="submittingApplication">
-        {{ submittingApplication ? 'Enviando…' : 'Enviar mi postulación' }}
+      @if (applicationMessage()) { <p class="form-feedback success" role="status">{{ applicationMessage() }}</p> }
+      @if (applicationError()) { <p class="form-feedback error" role="alert">{{ applicationError() }}</p> }
+      <button type="submit" class="btn-enviar" [disabled]="submittingApplication()">
+        {{ submittingApplication() ? 'Enviando…' : 'Enviar mi postulación' }}
       </button>
     </form>
   </section>
@@ -168,21 +168,21 @@
             <textarea id="op-comentario" rows="4" formControlName="comentario" maxlength="500" required></textarea>
           </div>
           <div class="aviso-moderacion">⏳ Tu opinión aparecerá en la web luego de una breve revisión.</div>
-          @if (opinionMessage) { <p class="form-feedback success" role="status">{{ opinionMessage }}</p> }
-          @if (opinionError) { <p class="form-feedback error" role="alert">{{ opinionError }}</p> }
-          <button type="submit" class="btn-opinion" [disabled]="submittingOpinion">
-            {{ submittingOpinion ? 'Enviando…' : 'Publicar mi opinión ⭐' }}
+          @if (opinionMessage()) { <p class="form-feedback success" role="status">{{ opinionMessage() }}</p> }
+          @if (opinionError()) { <p class="form-feedback error" role="alert">{{ opinionError() }}</p> }
+          <button type="submit" class="btn-opinion" [disabled]="submittingOpinion()">
+            {{ submittingOpinion() ? 'Enviando…' : 'Publicar mi opinión ⭐' }}
           </button>
         </form>
       </div>
       <div class="columna-reseñas">
         <h2 class="reseñas-titulo">Lo que dice nuestra gente</h2>
-        @if (opinionError && !opinions.length) {
-          <p class="form-feedback error">{{ opinionError }}</p>
-        } @else if (opinions.length) {
-          <p class="reseñas-meta"><span class="promedio-estrellas">★ {{ averageRating }}</span> de 5 — {{ opinions.length }} {{ opinions.length === 1 ? 'opinión' : 'opiniones' }}</p>
+        @if (opinionError() && !opinions().length) {
+          <p class="form-feedback error">{{ opinionError() }}</p>
+        } @else if (opinions().length) {
+          <p class="reseñas-meta"><span class="promedio-estrellas">★ {{ averageRating }}</span> de 5 — {{ opinions().length }} {{ opinions().length === 1 ? 'opinión' : 'opiniones' }}</p>
           <div class="reseñas-grid">
-            @for (opinion of opinions; track opinion._id) {
+            @for (opinion of opinions(); track opinion._id) {
               <article class="reseña-card">
                 <div class="reseña-header">
                   <div class="reseña-avatar">{{ opinion.nombre.slice(0, 1).toUpperCase() }}</div>

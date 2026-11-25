@@ -8,33 +8,33 @@
   </header>
   <nav class="admin-nav" aria-label="Secciones administrativas">
     <button type="button" (click)="setTab('resumen')">🏠 Resumen</button>
-    <button type="button" (click)="setTab('pedidos')">📦 Pedidos ({{ orders.length }})</button>
-    <button type="button" (click)="setTab('vacantes')">💼 Vacantes ({{ vacancies.length }})</button>
-    <button type="button" (click)="setTab('postulaciones')">📋 Postulaciones ({{ applications.length }})</button>
-    <button type="button" (click)="setTab('opiniones')">⭐ Opiniones ({{ opinions.length }})</button>
+    <button type="button" (click)="setTab('pedidos')">📦 Pedidos ({{ orders().length }})</button>
+    <button type="button" (click)="setTab('vacantes')">💼 Vacantes ({{ vacancies().length }})</button>
+    <button type="button" (click)="setTab('postulaciones')">📋 Postulaciones ({{ applications().length }})</button>
+    <button type="button" (click)="setTab('opiniones')">⭐ Opiniones ({{ opinions().length }})</button>
   </nav>
-  @if (message) { <p class="form-feedback success" role="status">{{ message }}</p> }
-  @if (error) { <p class="form-feedback error" role="alert">{{ error }}</p> }
+  @if (message()) { <p class="form-feedback success" role="status">{{ message() }}</p> }
+  @if (error()) { <p class="form-feedback error" role="alert">{{ error() }}</p> }
 
-  @if (tab === 'resumen') {
+  @if (tab() === 'resumen') {
     <section>
       <h1 class="seccion-titulo">Bienvenido al panel</h1>
       <p class="seccion-desc">Administra pedidos, vacantes, postulaciones y opiniones de Asadero Con Afán.</p>
       <div class="resumen-grid">
-        <button class="resumen-card" type="button" (click)="setTab('pedidos')"><span class="resumen-numero">{{ orders.length }}</span><span class="resumen-label">Pedidos</span></button>
-        <button class="resumen-card" type="button" (click)="setTab('vacantes')"><span class="resumen-numero">{{ vacancies.length }}</span><span class="resumen-label">Vacantes</span></button>
-        <button class="resumen-card" type="button" (click)="setTab('postulaciones')"><span class="resumen-numero">{{ applications.length }}</span><span class="resumen-label">Postulaciones</span></button>
-        <button class="resumen-card" type="button" (click)="setTab('opiniones')"><span class="resumen-numero">{{ opinions.length }}</span><span class="resumen-label">Opiniones</span></button>
+        <button class="resumen-card" type="button" (click)="setTab('pedidos')"><span class="resumen-numero">{{ orders().length }}</span><span class="resumen-label">Pedidos</span></button>
+        <button class="resumen-card" type="button" (click)="setTab('vacantes')"><span class="resumen-numero">{{ vacancies().length }}</span><span class="resumen-label">Vacantes</span></button>
+        <button class="resumen-card" type="button" (click)="setTab('postulaciones')"><span class="resumen-numero">{{ applications().length }}</span><span class="resumen-label">Postulaciones</span></button>
+        <button class="resumen-card" type="button" (click)="setTab('opiniones')"><span class="resumen-numero">{{ opinions().length }}</span><span class="resumen-label">Opiniones</span></button>
       </div>
     </section>
   }
 
-  @if (tab === 'pedidos') {
+  @if (tab() === 'pedidos') {
     <section>
       <h1 class="seccion-titulo">Administración de pedidos</h1>
       <p class="seccion-desc">Consulta la información del cliente, productos y total; actualiza el seguimiento.</p>
       <div class="admin-list">
-        @for (order of orders; track order._id) {
+        @for (order of orders(); track order._id) {
           <article class="admin-row">
             <div class="item-info">
               <h2 class="item-nombre">Orden {{ order.numeroOrden }} · {{ order.cliente.nombre }}</h2>
@@ -58,15 +58,15 @@
     </section>
   }
 
-  @if (tab === 'vacantes') {
+  @if (tab() === 'vacantes') {
     <section>
       <div class="toolbar">
         <div><h1 class="seccion-titulo">Vacantes</h1><p class="seccion-desc">Publica, edita y activa o desactiva vacantes.</p></div>
         <button type="button" class="btn-secondary-action" (click)="openVacancy()">+ Nueva vacante</button>
       </div>
-      @if (showVacancyForm) {
+      @if (showVacancyForm()) {
         <form class="content-card formulario-hv" [formGroup]="vacancyForm" (ngSubmit)="saveVacancy()">
-          <h2>{{ editingVacancy ? 'Editar vacante' : 'Nueva vacante' }}</h2>
+          <h2>{{ editingVacancy() ? 'Editar vacante' : 'Nueva vacante' }}</h2>
           <div class="campo-grupo"><label for="vac-cargo">Cargo *</label><input id="vac-cargo" formControlName="cargo" required></div>
           <div class="fila-dos">
             <div class="campo-grupo"><label for="vac-jornada">Tipo de jornada *</label><input id="vac-jornada" formControlName="jornada" required></div>
@@ -76,13 +76,13 @@
           <div class="campo-grupo"><label for="vac-req">Requisitos (uno por línea)</label><textarea id="vac-req" formControlName="requisitos" rows="3"></textarea></div>
           <label><input type="checkbox" formControlName="activa"> Publicar como activa</label>
           <div class="admin-actions">
-            <button type="button" class="btn-cancelar" (click)="showVacancyForm = false">Cancelar</button>
+            <button type="button" class="btn-cancelar" (click)="showVacancyForm.set(false)">Cancelar</button>
             <button type="submit" class="btn-guardar">Guardar vacante</button>
           </div>
         </form>
       }
       <div class="admin-list">
-        @for (vacancy of vacancies; track vacancy._id) {
+        @for (vacancy of vacancies(); track vacancy._id) {
           <article class="admin-row">
             <div><h2 class="item-nombre">{{ vacancy.cargo }} · {{ vacancy.activa ? 'Activa' : 'Inactiva' }}</h2><p>{{ vacancy.jornada }} · {{ vacancy.ubicacion }}</p><p>{{ vacancy.descripcion }}</p></div>
             <div class="admin-actions">
@@ -96,18 +96,18 @@
     </section>
   }
 
-  @if (tab === 'postulaciones') {
+  @if (tab() === 'postulaciones') {
     <section>
       <h1 class="seccion-titulo">Postulaciones y hojas de vida</h1>
       <div class="campo-grupo">
         <label for="app-filter">Filtrar por vacante</label>
-        <select id="app-filter" [(ngModel)]="selectedVacancy" (change)="filterApplications()">
+        <select id="app-filter" [ngModel]="selectedVacancy()" (ngModelChange)="selectedVacancy.set($event); filterApplications()">
           <option value="">Todas las vacantes</option>
-          @for (vacancy of vacancies; track vacancy._id) { <option [value]="vacancy._id">{{ vacancy.cargo }}</option> }
+          @for (vacancy of vacancies(); track vacancy._id) { <option [value]="vacancy._id">{{ vacancy.cargo }}</option> }
         </select>
       </div>
       <div class="admin-list">
-        @for (application of applications; track application._id) {
+        @for (application of applications(); track application._id) {
           <article class="admin-row">
             <div>
               <h2 class="item-nombre">{{ application.nombre }} · {{ vacancyName(application) }}</h2>
@@ -131,11 +131,11 @@
     </section>
   }
 
-  @if (tab === 'opiniones') {
+  @if (tab() === 'opiniones') {
     <section>
       <h1 class="seccion-titulo">Moderación de opiniones</h1>
       <div class="admin-list">
-        @for (opinion of opinions; track opinion._id) {
+        @for (opinion of opinions(); track opinion._id) {
           <article class="admin-row">
             <div><h2 class="item-nombre">{{ opinion.nombre }} · {{ '★'.repeat(opinion.rating) }}</h2><p>{{ opinion.plato }} · {{ opinion.comentario }}</p><small>{{ opinion.createdAt | date:'short' }} · {{ opinion.aprobada ? 'Publicada' : 'Pendiente' }}</small></div>
             <div class="admin-actions">

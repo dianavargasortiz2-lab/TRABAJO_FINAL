@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
@@ -19,11 +19,11 @@ interface StoreConfig {
   templateUrl: './checkout.component.html',
 })
 export class CheckoutComponent implements OnInit {
-  deliveryFee: number | null = null;
-  configNotice = '';
-  submitError = '';
-  submitting = false;
-  order: Order | null = null;
+  readonly deliveryFee = signal<number | null>(null);
+  readonly configNotice = signal('');
+  readonly submitError = signal('');
+  readonly submitting = signal(false);
+  readonly order = signal<Order | null>(null);
   readonly statuses = ['Recibido', 'En preparación', 'En camino', 'Entregado'];
   readonly form;
 
@@ -45,32 +45,33 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<StoreConfig>(apiUrl('/api/store-config')).subscribe({
       next: (config) => {
-        this.deliveryFee = config.deliveryFee;
-        if (this.deliveryFee === null) this.configNotice = 'El costo del domicilio se confirmará contigo antes de preparar el pedido.';
+        this.deliveryFee.set(config.deliveryFee);
+        if (config.deliveryFee === null) this.configNotice.set('El costo del domicilio se confirmará contigo antes de preparar el pedido.');
       },
       error: () => {
-        this.configNotice = 'No se pudo consultar el costo del domicilio; podrás enviar el pedido y se confirmará contigo.';
+        this.configNotice.set('No se pudo consultar el costo del domicilio; podrás enviar el pedido y se confirmará contigo.');
       },
     });
   }
 
   get total(): number | null {
-    return this.deliveryFee === null
+    const deliveryFee = this.deliveryFee();
+    return deliveryFee === null
       ? null
-      : this.cart.subtotal + this.deliveryFee;
+      : this.cart.subtotal + deliveryFee;
   }
 
   submit(): void {
-    this.submitError = '';
+    this.submitError.set('');
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     if (!this.cart.items.length) {
-      this.submitError = 'El carrito está vacío.';
+      this.submitError.set('El carrito está vacío.');
       return;
     }
-    this.submitting = true;
+    this.submitting.set(true);
     this.orders
       .createOrder({
         cliente: this.form.getRawValue(),
@@ -81,16 +82,17 @@ export class CheckoutComponent implements OnInit {
       })
       .subscribe({
         next: (order) => {
-          this.order = order;
+          this.order.set(order);
           this.cart.clear();
-          this.submitting = false;
+          this.submitting.set(false);
         },
         error: (error: unknown) => {
-          this.submitError =
+          this.submitError.set(
             error instanceof HttpErrorResponse
               ? error.error?.message ?? 'No se pudo registrar el pedido. Intenta nuevamente.'
-              : 'No se pudo registrar el pedido. Intenta nuevamente.';
-          this.submitting = false;
+              : 'No se pudo registrar el pedido. Intenta nuevamente.',
+          );
+          this.submitting.set(false);
         },
       });
   }

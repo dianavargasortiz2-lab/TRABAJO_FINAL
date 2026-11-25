@@ -7,26 +7,26 @@
     <form class="formulario-hv" [formGroup]="form" (ngSubmit)="submit()">
       <div class="campo-grupo"><label for="orden-numero">Número de orden *</label><input id="orden-numero" formControlName="numeroOrden" required></div>
       <div class="campo-grupo"><label for="orden-telefono">Teléfono usado en el pedido *</label><input id="orden-telefono" type="tel" formControlName="telefono" required></div>
-      @if (error) { <p class="form-feedback error" role="alert">{{ error }}</p> }
+      @if (error()) { <p class="form-feedback error" role="alert">{{ error() }}</p> }
       <button type="submit" class="btn-enviar">Consultar pedido</button>
     </form>
   </div>
-  @if (order) {
+  @if (order(); as currentOrder) {
     <div class="content-card">
-      <h2>Orden {{ order.numeroOrden }}</h2>
-      <p>Estado actual: <strong>{{ order.estado }}</strong></p>
+      <h2>Orden {{ currentOrder.numeroOrden }}</h2>
+      <p>Estado actual: <strong>{{ currentOrder.estado }}</strong></p>
       <div class="order-status-steps">
         @for (status of statuses; track status) {
-          <span [class.current]="statuses.indexOf(order.estado) >= $index">{{ status }}</span>
+          <span [class.current]="statuses.indexOf(currentOrder.estado) >= $index">{{ status }}</span>
         }
       </div>
       <div class="cart-panel">
-        @for (item of order.productos; track item.productId) {
+        @for (item of currentOrder.productos; track item.productId) {
           <div class="order-summary-row"><span>{{ item.name }} × {{ item.quantity }}</span><span>{{ item.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
         }
-        <div class="order-summary-row"><span>Subtotal</span><span>{{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
-        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio === null ? 'Por confirmar' : (order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</span></div>
-        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total === null ? 'Por confirmar' : (order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
+        <div class="order-summary-row"><span>Subtotal</span><span>{{ currentOrder.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
+        <div class="order-summary-row"><span>Domicilio</span><span>{{ currentOrder.costoDomicilio === null ? 'Por confirmar' : (currentOrder.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</span></div>
+        <div class="order-summary-row"><strong>Total</strong><strong>{{ currentOrder.total === null ? 'Por confirmar' : (currentOrder.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
       </div>
       <a [href]="whatsappLink()" target="_blank" rel="noopener noreferrer" class="btn-secondary-action">Consultar por WhatsApp</a>
     </div>

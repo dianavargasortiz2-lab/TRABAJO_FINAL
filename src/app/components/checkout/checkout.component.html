@@ -3,27 +3,27 @@
   <p>Revisa tu carrito y completa los datos de entrega</p>
 </section>
 <section class="formulario-pagina">
-  @if (order) {
+  @if (order(); as currentOrder) {
     <div class="content-card">
       <h2>¡Pedido recibido!</h2>
-      <p>Número de orden: <strong>{{ order.numeroOrden }}</strong></p>
-      <p>Estado: {{ order.estado }}</p>
+      <p>Número de orden: <strong>{{ currentOrder.numeroOrden }}</strong></p>
+      <p>Estado: {{ currentOrder.estado }}</p>
       <div class="cart-panel">
-        @for (item of order.productos; track item.productId) {
+        @for (item of currentOrder.productos; track item.productId) {
           <div class="order-summary-row"><span>{{ item.name }} × {{ item.quantity }}</span><span>{{ item.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
         }
-        <div class="order-summary-row"><span>Subtotal</span><span>{{ order.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
-        <div class="order-summary-row"><span>Domicilio</span><span>{{ order.costoDomicilio === null ? 'Por confirmar' : (order.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</span></div>
-        <div class="order-summary-row"><strong>Total</strong><strong>{{ order.total === null ? 'Por confirmar' : (order.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
+        <div class="order-summary-row"><span>Subtotal</span><span>{{ currentOrder.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</span></div>
+        <div class="order-summary-row"><span>Domicilio</span><span>{{ currentOrder.costoDomicilio === null ? 'Por confirmar' : (currentOrder.costoDomicilio | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</span></div>
+        <div class="order-summary-row"><strong>Total</strong><strong>{{ currentOrder.total === null ? 'Por confirmar' : (currentOrder.total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
       </div>
       <div class="order-status-steps">
         @for (status of statuses; track status) {
-          <span [class.current]="statuses.indexOf(order.estado) >= $index">{{ status }}</span>
+          <span [class.current]="statuses.indexOf(currentOrder.estado) >= $index">{{ status }}</span>
         }
       </div>
       <div class="hero-botones">
-        <a [routerLink]="['/seguimiento']" [queryParams]="{ orden: order.numeroOrden }" class="btn-primary">Seguir pedido</a>
-        <a [href]="whatsappLink(order)" class="btn-secundario" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>
+        <a [routerLink]="['/seguimiento']" [queryParams]="{ orden: currentOrder.numeroOrden }" class="btn-primary">Seguir pedido</a>
+        <a [href]="whatsappLink(currentOrder)" class="btn-secundario" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>
       </div>
     </div>
   } @else {
@@ -47,9 +47,9 @@
           <p>Tu carrito está vacío. <a routerLink="/menu">Explora el menú</a>.</p>
         }
         <div class="order-summary-row"><span>Subtotal</span><strong>{{ cart.subtotal | currency:'COP':'symbol-narrow':'1.0-0':'es-CO' }}</strong></div>
-        <div class="order-summary-row"><span>Domicilio</span><strong>{{ deliveryFee === null ? 'Por confirmar' : (deliveryFee | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
+        <div class="order-summary-row"><span>Domicilio</span><strong>{{ deliveryFee() === null ? 'Por confirmar' : (deliveryFee() | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
         <div class="order-summary-row"><strong>Total</strong><strong>{{ total === null ? 'Por confirmar' : (total | currency:'COP':'symbol-narrow':'1.0-0':'es-CO') }}</strong></div>
-        @if (configNotice) { <p class="form-feedback success" role="status">{{ configNotice }}</p> }
+        @if (configNotice()) { <p class="form-feedback success" role="status">{{ configNotice() }}</p> }
       </div>
       <div class="content-card">
         <h2>Datos de entrega</h2>
@@ -66,9 +66,9 @@
               <option value="Tarjeta contraentrega">Tarjeta contraentrega</option>
             </select>
           </div>
-          @if (submitError) { <p class="form-feedback error" role="alert">{{ submitError }}</p> }
-          <button type="submit" class="btn-enviar" [disabled]="submitting || !cart.items.length">
-            {{ submitting ? 'Registrando pedido…' : 'Confirmar pedido' }}
+          @if (submitError()) { <p class="form-feedback error" role="alert">{{ submitError() }}</p> }
+          <button type="submit" class="btn-enviar" [disabled]="submitting() || !cart.items.length">
+            {{ submitting() ? 'Registrando pedido…' : 'Confirmar pedido' }}
           </button>
         </form>
       </div>
