@@ -2,11 +2,14 @@
 
 .home-photo-preview {
   overflow: hidden;
-  background: #fff;
+  background: var(--oscuro);
+  padding: 8px 0;
 }
 
 .home-photo-preview img {
+  display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
 }
 
