@@ -1,5 +1,16 @@
 @import '../css/style.css';
 
+.home-photo-preview {
+  overflow: hidden;
+  background: #211a16;
+}
+
+.home-photo-preview img {
+  width: 100%;
+  height: clamp(180px, 30vw, 360px);
+  object-fit: cover;
+}
+
 button,
 input,
 select,

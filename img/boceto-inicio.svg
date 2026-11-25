@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 480" role="img" aria-labelledby="title description">
+  <title id="title">Boceto temporal para la foto principal</title>
+  <desc id="description">Ilustración cálida de un pollo asado que indica dónde aparecerá la foto real del asadero.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#211a16"/>
+      <stop offset="1" stop-color="#56301c"/>
+    </linearGradient>
+    <linearGradient id="roast" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffc46a"/>
+      <stop offset="1" stop-color="#d94b16"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#ff7a00" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#ff7a00" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <path fill="url(#background)" d="M0 0h1600v480H0z"/>
+  <circle cx="1240" cy="225" r="330" fill="url(#glow)"/>
+  <g fill="none" stroke="#f8c989" stroke-opacity=".16">
+    <circle cx="1260" cy="230" r="190" stroke-width="2"/>
+    <circle cx="1260" cy="230" r="215" stroke-width="2"/>
+  </g>
+  <g transform="translate(1260 230)">
+    <ellipse cy="115" rx="230" ry="48" fill="#130f0d" opacity=".42"/>
+    <ellipse cy="80" rx="214" ry="58" fill="#f3e8d9"/>
+    <ellipse cy="70" rx="184" ry="42" fill="#fffaf2"/>
+    <path d="M-102 59c-38-38-35-100 11-128 36-22 81-9 108 17 20-30 70-41 104-17 43 31 40 95 4 128-33 31-76 38-126 38-41 0-76-10-101-38Z" fill="url(#roast)" stroke="#b84212" stroke-width="8"/>
+    <path d="M-69 41c16 9 33 12 57 11m111-16c-14 8-29 12-46 14" fill="none" stroke="#7d3218" stroke-linecap="round" stroke-width="9" opacity=".72"/>
+    <path d="M-131 6c-25-23-44-13-42 6 2 17 23 25 46 27m239-43c26-20 45-8 40 10-4 17-25 23-48 24" fill="#f5ba66" stroke="#b84212" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-13 100c-16 20-36 35-58 40m111-39c15 19 34 31 57 37" fill="none" stroke="#78a54a" stroke-linecap="round" stroke-width="12"/>
+    <g fill="#78a54a">
+      <ellipse cx="-122" cy="79" rx="13" ry="25" transform="rotate(-45 -122 79)"/>
+      <ellipse cx="145" cy="71" rx="13" ry="25" transform="rotate(42 145 71)"/>
+      <ellipse cx="-91" cy="104" rx="10" ry="21" transform="rotate(35 -91 104)"/>
+      <ellipse cx="108" cy="107" rx="10" ry="21" transform="rotate(-35 108 107)"/>
+    </g>
+  </g>
+  <g fill="#ffb800">
+    <path d="m1024 90 8 20 20 8-20 8-8 20-8-20-20-8 20-8z"/>
+    <path d="m1480 102 6 15 15 6-15 6-6 15-6-15-15-6 15-6z"/>
+    <circle cx="1095" cy="340" r="6"/>
+    <circle cx="1456" cy="328" r="5"/>
+  </g>
+  <g font-family="Arial, sans-serif">
+    <text x="112" y="185" fill="#ffb800" font-size="21" font-weight="700" letter-spacing="5">VISTA PREVIA</text>
+    <text x="108" y="258" fill="#fffaf2" font-size="54" font-weight="700">Aquí irá tu foto</text>
+    <text x="112" y="306" fill="#e7d5c6" font-size="25">Espacio para la imagen principal del asadero</text>
+    <rect x="112" y="345" width="270" height="3" rx="2" fill="#ff5200"/>
+  </g>
+</svg>
