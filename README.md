@@ -39,3 +39,13 @@ El catálogo compartido por Angular y el proceso de carga a MongoDB está en `sh
 Los datos del equipo conservan los textos del sitio de origen. La misión, visión y valores se presentan de forma breve y coherente con la propuesta comercial del asadero.
 
 La compilación de Angular produce `dist/asadero-con-afan`. El backend debe desplegarse como servicio Node/Express con una instancia MongoDB y las variables anteriores configuradas.
+
+## Cómo cambiar las fotos del sitio
+
+1. Guarda cada foto en formato JPG, PNG o WebP dentro de `img/menu/` para los productos o `img/equipo/` para las personas.
+2. Usa nombres simples, en minúsculas y sin espacios, por ejemplo `pollo-entero.jpg` o `maria-garcia.jpg`.
+3. Para cambiar un producto, abre `shared/catalog.json` y reemplaza el valor de `image` por una ruta relativa como `img/menu/pollo-entero.jpg`.
+4. Para cambiar una foto del equipo, abre `src/app/data/catalog.ts` y reemplaza la propiedad `image` de cada persona por `img/equipo/maria-garcia.jpg`.
+5. Ejecuta `npm run build` y confirma que las imágenes aparecen antes de subir los cambios a GitHub.
+
+Recomendación: usa fotos horizontales de 1200 × 800 px para productos y cuadradas de 800 × 800 px para el equipo. Optimízalas a menos de 500 KB y verifica que tengas autorización para publicarlas.

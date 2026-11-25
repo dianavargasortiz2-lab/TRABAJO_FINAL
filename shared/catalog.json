@@ -13,7 +13,7 @@
       "description": "Marinado en especias secretas, asado al carbón lentamente.",
       "price": 30000,
       "category": "Pollos",
-      "image": "/img/menu/pollo-entero.svg"
+      "image": "img/menu/pollo-entero.svg"
     },
     {
       "id": "medio-pollo",
@@ -21,7 +21,7 @@
       "description": "Perfecto para compartir en pareja o como almuerzo completo.",
       "price": 16000,
       "category": "Pollos",
-      "image": "/img/menu/medio-pollo.svg"
+      "image": "img/menu/medio-pollo.svg"
     },
     {
       "id": "cuarto-pollo",
@@ -29,7 +29,7 @@
       "description": "Perfecto para ti — quedas llenito por bajo precio.",
       "price": 9000,
       "category": "Pollos",
-      "image": "/img/menu/cuarto-pollo.svg",
+      "image": "img/menu/cuarto-pollo.svg",
       "startsAt": true
     },
     {
@@ -38,7 +38,7 @@
       "description": "Crocantes por fuera, suaves por dentro.",
       "price": 2000,
       "category": "Acompañamientos",
-      "image": "/img/menu/papas.svg"
+      "image": "img/menu/papas.svg"
     },
     {
       "id": "yuca",
@@ -46,7 +46,7 @@
       "description": "Yuca tierna y bien cocida, el acompañamiento típico huilense que no puede faltar.",
       "price": 2000,
       "category": "Acompañamientos",
-      "image": "/img/menu/yuca.svg"
+      "image": "img/menu/yuca.svg"
     },
     {
       "id": "platano-entero",
@@ -54,7 +54,7 @@
       "description": "El mejor plátano de la región para tu complacencia.",
       "price": 6000,
       "category": "Acompañamientos",
-      "image": "/img/menu/platano.svg"
+      "image": "img/menu/platano.svg"
     },
     {
       "id": "arroz",
@@ -62,7 +62,7 @@
       "description": "Arroz blanco al vapor, el acompañamiento clásico.",
       "price": 2000,
       "category": "Acompañamientos",
-      "image": "/img/menu/arroz.svg"
+      "image": "img/menu/arroz.svg"
     },
     {
       "id": "gaseosas",
@@ -70,7 +70,7 @@
       "description": "Coca-Cola, Sprite, Manzana. Bien fría.",
       "price": 3000,
       "category": "Bebidas",
-      "image": "/img/menu/gaseosas.svg"
+      "image": "img/menu/gaseosas.svg"
     }
   ],
   "vacancies": [

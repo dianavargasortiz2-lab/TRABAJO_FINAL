@@ -275,7 +275,7 @@ textarea {
 
 .seccion-titulo,
 .opiniones-titulo-seccion {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Serif Display', serif;
   font-size: 34px;
   color: var(--oscuro);
   margin-bottom: 10px;
@@ -368,7 +368,7 @@ textarea {
 
 .opinion-form-card h3,
 .reseñas-titulo {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Serif Display', serif;
   color: var(--oscuro);
 }
 
@@ -526,10 +526,13 @@ textarea {
 }
 
 .login-logo {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
   text-align: center;
   color: var(--naranja);
-  font: 700 22px 'Playfair Display', serif;
+  font: 700 22px 'DM Serif Display', serif;
 }
 
 .login-subtitulo,
@@ -543,7 +546,7 @@ textarea {
 .login-card h1 {
   color: white;
   text-align: center;
-  font: 700 28px 'Playfair Display', serif;
+  font: 700 28px 'DM Serif Display', serif;
   margin-bottom: 20px;
 }
 
@@ -926,4 +929,10 @@ textarea {
   .formulario-pagina.pedido-confirmacion {
     padding: 24px 16px 36px;
   }
+}
+ .brand-mark {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 50%;
 }
