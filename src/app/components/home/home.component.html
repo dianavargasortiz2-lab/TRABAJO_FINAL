@@ -1,16 +1,21 @@
 <section class="hero">
   <div class="hero-content">
+    <span class="hero-etiqueta"><span aria-hidden="true">✦</span> Asado al carbón en Neiva</span>
     <h1>El mejor pollo asado<br><span>de Neiva</span></h1>
     <p>Sabor casero, calidad garantizada. Hecho con amor y mucho afán.</p>
     <div class="hero-botones">
-      <a routerLink="/menu" class="btn-primary">Ver menú completo</a>
-      <a routerLink="/unete" class="btn-secundario">Únete a nuestro equipo</a>
+      <a routerLink="/menu" class="btn-primary"><span aria-hidden="true">☰</span> Ver menú completo</a>
+      <a routerLink="/unete" class="btn-secundario"><span aria-hidden="true">♡</span> Únete a nuestro equipo</a>
     </div>
+  </div>
+  <div class="hero-imagen">
+    <img src="/img/menu/pollo-entero.svg" alt="Pollo asado al carbón, especialidad de Asadero Con Afán">
+    <span class="hero-sello"><span aria-hidden="true">🔥</span> Recién salido del asador</span>
   </div>
 </section>
 <section class="sobre-nosotros">
   <div class="sobre-contenido">
-    <h2>¿Quiénes somos?</h2>
+    <h2><span class="titulo-icono" aria-hidden="true">♡</span> ¿Quiénes somos?</h2>
     <p>Asadero Con Afán nació en Neiva con una misión simple: llevar el sabor del pollo asado al carbón a cada familia de la ciudad. Más de 10 años de experiencia nos respaldan.</p>
     <p>Usamos ingredientes frescos, marinados con especias secretas y asados lentamente para que cada bocado sea una experiencia.</p>
     <a routerLink="/equipo" class="btn-secundario">Conoce a nuestro equipo</a>
@@ -41,14 +46,22 @@
   <div class="locales-grid">
     <div class="local-card">
       <div class="local-info">
-        <h3>Local Principal</h3>
-        <p>📍 Cl. 25 Sur #35/27, Oasis Sur, Neiva, Huila</p>
-        <p>🕐 Lun–Dom: 11:00am – 9:00pm</p>
-        <p>📞 312 325 62 08</p>
-        <a href="https://wa.me/573123256208" class="btn-pedir" target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
+        <h3><span class="titulo-icono" aria-hidden="true">⌖</span> Local Principal</h3>
+        <p><span class="dato-icono" aria-hidden="true">⌖</span>{{ address }}</p>
+        <p><span class="dato-icono" aria-hidden="true">◷</span>Lun–Dom: 11:00am – 9:00pm</p>
+        <p><span class="dato-icono" aria-hidden="true">☎</span>{{ whatsappPhone }}</p>
+        <div class="local-acciones">
+          <a [href]="whatsappUrl" class="btn-pedir" target="_blank" rel="noopener noreferrer">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L0 24l6.5-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.4ZM12.1 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.9 1 1-3.8-.3-.4a9.8 9.8 0 1 1 8.6 4.8Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.6-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4Z"/></svg>
+            Pedir por WhatsApp
+          </a>
+          <a class="btn-pedir btn-mapa" href="https://www.google.com/maps/search/?api=1&amp;query=Cra%2032%20%23%2025-04%20Sur%2C%20Neiva%2C%20Huila" target="_blank" rel="noopener noreferrer">
+            <span aria-hidden="true">⌖</span> Cómo llegar
+          </a>
+        </div>
       </div>
       <div class="mapa-contenedor">
-        <iframe title="Ubicación del Asadero Con Afán en Neiva" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11000!2d-75.26663443177092!3d2.902482868824606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b73ba3cce6869%3A0xf14bba6fc6b167e4!2sAsadero%20de%20Pollos%20CON%20AF%C3%81N!5e0!3m2!1ses-419!2sco!4v1776295455923!5m2!1ses-419!2sco" style="border:0; border-radius:16px; width:100%; height:300px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe title="Ubicación del Asadero Con Afán en Neiva" src="https://maps.google.com/maps?q=Cra+32+%23+25-04+Sur%2C+Neiva%2C+Huila&amp;output=embed" style="border:0; border-radius:16px; width:100%; height:300px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { CatalogService } from '../../services/catalog.service';
 import { CATEGORIES, PRODUCTS } from '../../data/catalog';
+import { WHATSAPP_NUMBER } from '../../data/business-contact';
 import { Product } from '../../models/domain.models';
 
 @Component({
@@ -59,6 +60,6 @@ export class MenuComponent implements OnInit {
   }
 
   whatsappLink(product: Product): string {
-    return `https://wa.me/573123256208?text=${encodeURIComponent(`Hola, quiero pedir ${product.name}`)}`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola, quiero pedir ${product.name}`)}`;
   }
 }

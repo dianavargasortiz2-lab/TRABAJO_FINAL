@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart.service';
 import { OrderService } from '../../services/order.service';
 import { apiUrl } from '../../services/api-url';
 import { DeliveryDetails, Order } from '../../models/domain.models';
+import { WHATSAPP_NUMBER } from '../../data/business-contact';
 
 interface StoreConfig {
   deliveryFee: number | null;
@@ -98,6 +99,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   whatsappLink(order: Order): string {
-    return `https://wa.me/573123256208?text=${encodeURIComponent(`Hola, mi pedido es ${order.numeroOrden}`)}`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola, mi pedido es ${order.numeroOrden}`)}`;
   }
 }

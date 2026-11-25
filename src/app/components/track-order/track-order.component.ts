@@ -5,6 +5,7 @@ import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/domain.models';
+import { WHATSAPP_NUMBER } from '../../data/business-contact';
 
 @Component({
   selector: 'app-track-order',
@@ -51,6 +52,6 @@ export class TrackOrderComponent {
 
   whatsappLink(): string {
     const numero = this.order()?.numeroOrden ?? '';
-    return `https://wa.me/573123256208?text=${encodeURIComponent(`Hola, consulto mi pedido ${numero}`)}`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola, consulto mi pedido ${numero}`)}`;
   }
 }

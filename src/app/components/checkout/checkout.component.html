@@ -1,11 +1,11 @@
-<section class="pagina-header">
+<section class="pagina-header" [class.pedido-header-confirmacion]="order()">
   <h1>Tu pedido</h1>
   <p>Revisa tu carrito y completa los datos de entrega</p>
 </section>
-<section class="formulario-pagina">
+<section class="formulario-pagina" [class.pedido-confirmacion]="order()">
   @if (order(); as currentOrder) {
-    <div class="content-card">
-      <h2>¡Pedido recibido!</h2>
+    <div class="content-card pedido-recibido">
+      <h2><span class="pedido-recibido-icono" aria-hidden="true">✓</span> ¡Pedido recibido!</h2>
       <p>Número de orden: <strong>{{ currentOrder.numeroOrden }}</strong></p>
       <p>Estado: {{ currentOrder.estado }}</p>
       <div class="cart-panel">
@@ -21,9 +21,12 @@
           <span [class.current]="statuses.indexOf(currentOrder.estado) >= $index">{{ status }}</span>
         }
       </div>
-      <div class="hero-botones">
-        <a [routerLink]="['/seguimiento']" [queryParams]="{ orden: currentOrder.numeroOrden }" class="btn-primary">Seguir pedido</a>
-        <a [href]="whatsappLink(currentOrder)" class="btn-secundario" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>
+      <div class="pedido-acciones">
+        <a [routerLink]="['/seguimiento']" [queryParams]="{ orden: currentOrder.numeroOrden }" class="btn-primary"><span aria-hidden="true">⌖</span> Seguir pedido</a>
+        <a [href]="whatsappLink(currentOrder)" class="btn-secundario" target="_blank" rel="noopener noreferrer">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L0 24l6.5-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.4Zm-8.4 18.2c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.9 1 1-3.8-.3-.4a9.8 9.8 0 1 1 8.6 4.8Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.6-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4Z"></path></svg>
+          Contactar por WhatsApp
+        </a>
       </div>
     </div>
   } @else {

@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { WHATSAPP_NUMBER } from '../../data/business-contact';
 
 @Component({
   selector: 'app-site-layout',
@@ -8,6 +9,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
   templateUrl: './site-layout.component.html',
 })
 export class SiteLayoutComponent {
+  readonly whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=Hola%20Asadero%20Con%20Af%C3%A1n`;
   menuAbierto = false;
   private footerClicks = 0;
   private footerTimer: ReturnType<typeof setTimeout> | undefined;
